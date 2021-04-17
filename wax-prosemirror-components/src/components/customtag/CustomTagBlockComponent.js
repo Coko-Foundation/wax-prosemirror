@@ -178,7 +178,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         {renderTagList()}
       </>
     ),
-    [isShowTag, inputValue, tagStatus, isDisabled],
+    [isShowTag, inputValue, JSON.stringify(tagStatus), isDisabled],
   );
 };
 
