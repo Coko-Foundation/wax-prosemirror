@@ -19,11 +19,12 @@ const SaveButton = ({ view = {}, item }) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleMouseDown = (e, editorState, editorDispatch) => {
+    console.log('in my custom save');
     // eslint-disable-next-line no-underscore-dangle
     // view._props.onChange(state.doc.content);
     setIsSaving(true);
-    console.log( 'SAVE: ' + editorState.doc.toString() );
-    console.log( editorState.doc );
+    console.log('SAVE: ' + editorState.doc.toString());
+    console.log(editorState.doc);
     setTimeout(() => {
       setIsSaving(false);
     }, 300);
