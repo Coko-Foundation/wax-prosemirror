@@ -78,6 +78,10 @@ const updateTrackStatus = status => {
   // console.log('status', status);
 };
 
+const getContent = content => {
+  console.log(content);
+};
+
 export default {
   MenuService: [
     {
@@ -120,6 +124,8 @@ export default {
       toolGroups: ['InfoToolGroup'],
     },
   ],
+
+  CustomSaveService: { getContent },
 
   SchemaService: DefaultSchema,
   TitleService: { updateTitle },
