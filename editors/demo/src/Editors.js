@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 
 import Editoria from './Editoria/Editoria';
-import HHMI from './HHMI/HHMI';
+// import HHMI from './HHMI/HHMI';
+import Meo from './Meo/Meo';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -45,16 +46,20 @@ const ProjectButton = styled.button`
 `;
 
 const Editors = () => {
-  const [project, setProject] = useState('editoria');
+  const [project, setProject] = useState('meo');
 
   const displayProject = () => {
     switch (project) {
-      case 'hhmi':
-        return <HHMI />;
+      case 'editoria':
+        return <Editoria />;
+      // case 'hhmi':
+      //   return <HHMI />;
+      case 'meo':
+        return <Meo />;
       case 'ncbi':
         break;
       default:
-        return <HHMI />;
+        return <Meo />;
     }
   };
 
@@ -67,7 +72,8 @@ const Editors = () => {
           <ProjectButton onClick={() => setProject('editoria')}>
             Editoria
           </ProjectButton>
-          <ProjectButton onClick={() => setProject('hhmi')}>HHMI</ProjectButton>
+          {/* <ProjectButton onClick={() => setProject('hhmi')}>HHMI</ProjectButton> */}
+          <ProjectButton onClick={() => setProject('meo')}>Meo</ProjectButton>
           {/* <ProjectButton onClick={() => setProject('ncbi')}>NCBI</ProjectButton> */}
         </Projects>
       </ChooseProject>
