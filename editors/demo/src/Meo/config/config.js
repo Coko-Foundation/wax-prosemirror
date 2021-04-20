@@ -78,7 +78,7 @@ const updateTrackStatus = status => {
   // console.log('status', status);
 };
 
-const getContent = content => {
+const saveContent = content => {
   console.log(content);
 };
 
@@ -125,7 +125,7 @@ export default {
     },
   ],
 
-  CustomSaveService: { getContent },
+  CustomSaveService: { saveContent },
 
   SchemaService: DefaultSchema,
   TitleService: { updateTitle },

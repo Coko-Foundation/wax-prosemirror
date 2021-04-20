@@ -26,7 +26,7 @@ const SaveButton = ({ view = {}, item }) => {
     // eslint-disable-next-line no-underscore-dangle
     // view._props.onChange(state.doc.content);
     setIsSaving(true);
-    saveService.getContent(editorState.doc.toString());
+    saveService.saveContent(editorState.doc.toString());
     // console.log('SAVE: ' + editorState.doc.toString());
     // console.log(editorState.doc);
     setTimeout(() => {
