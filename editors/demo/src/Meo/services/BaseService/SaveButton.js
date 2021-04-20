@@ -7,6 +7,7 @@ const SaveButton = ({ view = {}, item }) => {
   const { icon, label, onlyOnMain, select, title } = item;
 
   const {
+    app,
     view: { main },
     activeViewId,
     activeView,
@@ -18,13 +19,16 @@ const SaveButton = ({ view = {}, item }) => {
 
   const [isSaving, setIsSaving] = useState(false);
 
+  const saveService = app.config.get('config.CustomSaveService');
+
   const handleMouseDown = (e, editorState, editorDispatch) => {
     console.log('in my custom save');
     // eslint-disable-next-line no-underscore-dangle
     // view._props.onChange(state.doc.content);
     setIsSaving(true);
-    console.log('SAVE: ' + editorState.doc.toString());
-    console.log(editorState.doc);
+    saveService.getContent(editorState.doc.toString());
+    // console.log('SAVE: ' + editorState.doc.toString());
+    // console.log(editorState.doc);
     setTimeout(() => {
       setIsSaving(false);
     }, 300);
