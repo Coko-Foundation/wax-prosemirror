@@ -11,8 +11,8 @@ import {
   ListToolGroupService,
   TablesService,
   TableToolGroupService,
-  // BaseService,
-  BaseToolGroupService,
+  BaseService,
+  // BaseToolGroupService,
   DisplayBlockLevelService,
   DisplayToolGroupService,
   TextBlockLevelService,
@@ -56,9 +56,10 @@ import invisibles, {
 } from '@guardian/prosemirror-invisibles';
 
 import {
-  BaseService,
+  BaseToolGroupService,
+  CustomSaveService,
   InlineAnnotationsService,
-  InlineCtxCodeService
+  InlineCtxCodeService,
 } from '../services';
 
 // const updateTitle = title => {
@@ -158,6 +159,9 @@ export default {
   },
 
   services: [
+    new BaseService(),
+    new CustomSaveService(),
+    new BaseToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
@@ -171,8 +175,6 @@ export default {
     new CommentsService(),
     new ImageService(),
     new TablesService(),
-    new BaseService(),
-    new BaseToolGroupService(),
     new NoteService(),
     new TableToolGroupService(),
     new ImageToolGroupService(),
