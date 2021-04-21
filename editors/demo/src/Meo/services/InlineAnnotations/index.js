@@ -15,11 +15,11 @@ import RomanNumeralService from './RomanNumeralService/RomanNumeralService';
 export default [
   // new CodeService(),
   // the next 3 services must come before BoldService and ItalicService
-  new RomanNumeralService(),
-  new AcronymService(),
   new MeoEmphasisService(),
   new MeoStrongService(),
   new MeoStrongerService(),
+  new RomanNumeralService(),
+  new AcronymService(),
   new BoldService(),
   new ItalicService(),
   // new SubscriptService(),

@@ -12,17 +12,17 @@ class MeoAnnotations extends ToolGroup {
     @inject('Emphasis') emphasis,
     @inject('Strong') strong,
     @inject('Stronger') stronger,
+    @inject('RomanNumeral') roman_numeral,
     @inject('Acronym') acronym,
     @inject('Bold') bold,
     @inject('Italic') italic,
-    @inject('RomanNumeral') roman_numeral,
   ) {
     super();
     this.tools = [
-      roman_numeral,
       emphasis,
       strong,
       stronger,
+      roman_numeral,
       acronym,
       bold,
       italic,
