@@ -7,8 +7,8 @@ export default
 @injectable()
 class Strong extends Tools {
   title = 'Toggle MEO stronger emphasis';
-  icon = 'strong'; // TODO: create proper icon
-  name = 'MeoStronger';
+  icon = 'bold'; // TODO: create proper icon
+  name = 'Stronger';
 
   get run() {
     return (state, dispatch) => {

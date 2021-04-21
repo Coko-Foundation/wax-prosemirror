@@ -60,6 +60,7 @@ import {
   CustomSaveService,
   InlineAnnotationsService,
   InlineCtxCodeService,
+  MeoAnnotationsToolGroupService,
 } from '../services';
 
 // const updateTitle = title => {
@@ -88,16 +89,15 @@ export default {
       templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
-        // {
-        //   name: 'Annotations',
-        //   more: [
-        //     'Superscript',
-        //     'Subscript',
-        //     'SmallCaps',
-        //     'Underline',
-        //     'StrikeThrough',
-        //   ],
-        // },
+        {
+          name: 'Annotations',
+          more: [
+            'RomanNumeral',
+            'Acronym',
+            'Italic',
+            'Bold'
+          ],
+        },
         'HighlightToolGroup',
         'TransformToolGroup',
         'CustomTagInline',
@@ -168,6 +168,7 @@ export default {
     new BaseService(),
     new CustomSaveService(),
     new BaseToolGroupService(),
+    new MeoAnnotationsToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

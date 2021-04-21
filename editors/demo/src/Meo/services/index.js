@@ -3,3 +3,5 @@ export { default as BaseToolGroupService } from './BaseToolGroupService/BaseTool
 
 export { default as InlineAnnotationsService } from './InlineAnnotations/InlineAnnotationsService';
 export { default as InlineCtxCodeService } from './InlineCtxCodeService/InlineCtxCodeService';
+
+export { default as MeoAnnotationsToolGroupService } from './MeoAnnotationsToolGroupService/MeoAnnotationsToolGroupService';
