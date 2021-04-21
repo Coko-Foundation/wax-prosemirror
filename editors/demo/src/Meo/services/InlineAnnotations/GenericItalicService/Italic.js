@@ -12,13 +12,13 @@ class Italic extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      toggleMark(state.config.schema.marks.i)(state, dispatch);
+      toggleMark(state.config.schema.marks.italic)(state, dispatch);
     };
   }
 
   get active() {
     return state => {
-      return Commands.markActive(state.config.schema.marks.i)(state);
+      return Commands.markActive(state.config.schema.marks.italic)(state);
     };
   }
 }

@@ -7,7 +7,7 @@ export default
 @injectable()
 class InlineCtxCode extends Tools {
   title = 'Toggle ConTeXt code';
-  icon = 'italic'; // TODO: create proper icon
+  icon = 'emphasis'; // TODO: create proper icon
   name = 'InlineCtxCode';
 
   get run() {

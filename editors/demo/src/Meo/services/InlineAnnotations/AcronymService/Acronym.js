@@ -7,7 +7,7 @@ export default
 @injectable()
 class Acronym extends Tools {
   title = 'Toggle acronym';
-  icon = 'italic'; // TODO: create proper icon
+  icon = 'smallCaps'; // TODO: create proper icon
   name = 'Acronym';
 
   get run() {

@@ -7,7 +7,7 @@ export default
 @injectable()
 class RomanNumeral extends Tools {
   title = 'Toggle roman numeral';
-  icon = 'italic'; // TODO: create proper icon
+  icon = 'smallCaps'; // TODO: create proper icon
   name = 'RomanNumeral';
 
   get run() {

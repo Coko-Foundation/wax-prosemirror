@@ -14,7 +14,6 @@ class Save extends Tools {
   onlyOnMain = true;
   name = 'Save';
   content = icons.save;
-  name = 'Save';
 
   get run() {
     return (state, dispatch) => {

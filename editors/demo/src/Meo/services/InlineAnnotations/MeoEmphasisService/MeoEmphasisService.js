@@ -11,7 +11,7 @@ class MeoEmphasisService extends Service {
   }
 
   register() {
-    this.container.bind('MeoEmphasis').to(MeoEmphasis);
+    this.container.bind('Emphasis').to(MeoEmphasis);
     const createMark = this.container.get('CreateMark');
     createMark(
       {
