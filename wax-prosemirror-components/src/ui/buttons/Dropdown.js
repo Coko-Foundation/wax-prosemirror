@@ -20,7 +20,7 @@ const DropWrapper = styled.div`
 
 const Dropdown = props => {
   const { className, disabled, dropComponent, iconName, label, title } = props;
-
+  console.log(dropComponent);
   const [isOpen, setIsOpen] = useState(false);
 
   // const dropElementRef = useRef(null);
