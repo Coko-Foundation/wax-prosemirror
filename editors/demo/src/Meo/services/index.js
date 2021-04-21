@@ -1,4 +1,4 @@
-export { default as CustomSaveService } from './BaseService/CustomSaveService';
+export { default as CustomSaveService } from './CustomSaveService/CustomSaveService';
 export { default as BaseToolGroupService } from './BaseToolGroupService/BaseToolGroupService';
 
 export { default as InlineAnnotationsService } from './InlineAnnotations/InlineAnnotationsService';
