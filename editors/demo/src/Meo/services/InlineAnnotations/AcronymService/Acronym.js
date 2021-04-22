@@ -2,12 +2,13 @@ import { toggleMark } from 'prosemirror-commands';
 import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
+import { icons } from '../../../components';
 
 export default
 @injectable()
 class Acronym extends Tools {
   title = 'Toggle acronym';
-  icon = 'smallCaps'; // TODO: create proper icon
+  icon = icons.acronym;
   name = 'Acronym';
 
   get run() {

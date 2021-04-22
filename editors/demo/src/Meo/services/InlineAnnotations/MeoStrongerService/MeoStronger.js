@@ -2,12 +2,13 @@ import { toggleMark } from 'prosemirror-commands';
 import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
+import { icons } from '../../../components';
 
 export default
 @injectable()
 class Strong extends Tools {
   title = 'Toggle MEO stronger emphasis';
-  icon = 'bold'; // TODO: create proper icon
+  icon = icons.stronger;
   name = 'Stronger';
 
   get run() {
