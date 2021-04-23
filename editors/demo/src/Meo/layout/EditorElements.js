@@ -518,6 +518,11 @@ export default css`
     background-color: #AFDDE9;
   }
 
+  .stile-da-definire {
+    background-color: #101010;
+    color: yellow;
+  }
+
   .context {
     color: rgb(150,220,150) !important;
     background: black !important;
