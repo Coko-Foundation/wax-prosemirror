@@ -1,4 +1,5 @@
 const meo_stronger = {
+  excludes: 'em strong',
   parseDOM: [
     { tag: 'b.enfasi3' },
     { tag: 'strong.enfasi3' }
