@@ -21,8 +21,8 @@ function addMark( start, end, mark ) {
 
 function removeMark( start, end, mark ) {
   return function( state, dispatch ) {
-    console.log( `removeMark, mark=${mark.type.name}, attr=${JSON.stringify(mark.attrs)}` );
-    if ( dispatch ) {
+    if ( mark && dispatch ) {
+      // console.log( `removeMark, mark=${mark.type.name}, attr=${JSON.stringify(mark.attrs)}` );
       let tr = state.tr;
       tr.removeMark( start, end, mark );
       // console.log( `selection from ${tr.selection.from} to ${tr.selection.to}, anchor=${tr.selection.anchor}, head=${tr.selection.head}` );
@@ -37,9 +37,9 @@ function removeMark( start, end, mark ) {
 
 function replaceMark( start, end, oldMark, newMark ) {
   return function( state, dispatch ) {
-    console.log( `replaceMark, oldMark=${oldMark.type.name}, attr=${JSON.stringify(oldMark.attrs)}` );
-    console.log( `replaceMark, newMark=${newMark.type.name}, attr=${JSON.stringify(newMark.attrs)}` );
-    if ( dispatch ) {
+    if ( oldMark && newMark && dispatch ) {
+      // console.log( `replaceMark, oldMark=${oldMark.type.name}, attr=${JSON.stringify(oldMark.attrs)}` );
+      // console.log( `replaceMark, newMark=${newMark.type.name}, attr=${JSON.stringify(newMark.attrs)}` );
       let tr = state.tr;
       tr.removeMark( start, end, oldMark );
       tr.addMark( start, end, newMark );
@@ -119,11 +119,20 @@ function replaceMarkAtSelection( state, oldMark, newMark ) {
   }
 }
 
+function removeMarkAtSelection( state, oldMark ) {
+  const { from, $from, to, empty } = state.selection;
+  if ( empty ) {
+    const { start, end } = findMarkSpan( state, from, oldMark );
+    return removeMark( start, end, oldMark );
+  }
+}
+
 export default {
   addMark,
   removeMark,
   replaceMark,
   findMarkSpan,
   toggleMarkAtSelection,
-  replaceMarkAtSelection
+  replaceMarkAtSelection,
+  removeMarkAtSelection,
 }
