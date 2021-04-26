@@ -6,10 +6,15 @@ const multipleChoiceNode = {
   attrs: {
     id: { default: '' },
   },
-  toDOM: () => ['multiple-choice', { class: 'multiple-choice' }, 0],
+  toDOM: node => ['multiple-choice', node.attrs, 0],
   parseDOM: [
     {
       tag: 'multiple-choice',
+      getAttrs(dom) {
+        return {
+          id: dom.getAttribute('id'),
+        };
+      },
     },
   ],
 };

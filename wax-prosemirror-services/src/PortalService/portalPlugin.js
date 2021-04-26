@@ -1,44 +1,32 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { v4 as uuidv4 } from 'uuid';
+import AbstractNodeView from './AbstractNodeView';
 
 const portalPlugin = new PluginKey('portalPlugin');
 
-class ReactNodeView {
-  constructor(node, view, getPos, decorations, createPortal, Component) {
-    this.dom = document.createElement('div');
-    this.dom.setAttribute('contenteditable', true);
-    this.dom.id = uuidv4();
-    this.dom.classList.add('portal');
-
-    createPortal(this.dom, Component, node, view, getPos, decorations);
-  }
-
-  update(node) {
-    return true;
-  }
-
-  destroy() {
-    this.dom = undefined;
-    this.contentDOM = undefined;
-  }
-}
-
-const PortalWithNodeView = (createPortal, Component) => {
+const CreateNodeView = (createPortal, Component, NodeView, context) => {
   return (theNode, view, getPos, decorations) =>
-    new ReactNodeView(
+    new NodeView(
       theNode,
       view,
       getPos,
       decorations,
       createPortal,
       Component,
+      context,
     );
 };
 
 export default props => {
   const nodeViews = {};
   props.portals.forEach(p => {
-    nodeViews[p.name] = PortalWithNodeView(props.createPortal, p.component);
+    const name = p.nodeView ? p.nodeView.name() : p.name;
+    console.log('ppp', p);
+    nodeViews[name] = CreateNodeView(
+      props.createPortal,
+      p.component,
+      p.nodeView || AbstractNodeView,
+      p.context.context,
+    );
   });
 
   return new Plugin({
