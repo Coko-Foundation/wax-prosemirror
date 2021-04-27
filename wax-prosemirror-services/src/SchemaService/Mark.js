@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 /* eslint-disable no-underscore-dangle */
->>>>>>> pm-node-views-portals
 import { isPlainObject } from 'lodash';
 import ParseRule from './ParseRule';
 import Middleware from '../lib/Middleware';
