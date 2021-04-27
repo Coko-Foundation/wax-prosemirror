@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+/* eslint-disable no-underscore-dangle */
+>>>>>>> pm-node-views-portals
 import { isPlainObject } from 'lodash';
 import ParseRule from './ParseRule';
 import Middleware from '../lib/Middleware';
@@ -55,7 +59,7 @@ export default class Mark {
   }
 
   toJSON() {
-    const importer = this.importer;
+    const { importer } = this;
 
     return {
       inline: this.inline,
