@@ -1,16 +1,17 @@
-import { isPlainObject } from "lodash";
-import ParseRule from "./ParseRule";
-import Middleware from "../lib/Middleware";
+import { isPlainObject } from 'lodash';
+import ParseRule from './ParseRule';
+import Middleware from '../lib/Middleware';
 
 export default class Mark {
-  name = "";
+  name = '';
   importer = {};
 
   inline = false;
-  group = "";
-  content = "";
+  group = '';
+  content = '';
   draggable = false;
   inclusive = true;
+  excludes = '';
   _attrs = {};
   _parseRules = [];
 
@@ -62,6 +63,7 @@ export default class Mark {
       content: this.content,
       draggable: this.draggable,
       inclusive: this.inclusive,
+      excludes: this.excludes,
       attrs: this._attrs,
       parseDOM: this._parseRules.map(rule => rule.combineRules()),
       toDOM: node => {
@@ -71,7 +73,7 @@ export default class Mark {
           hooks = hook;
         });
         return hooks.value;
-      }
+      },
     };
   }
 }
