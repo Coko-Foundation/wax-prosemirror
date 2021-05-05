@@ -132,7 +132,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
     configTags.push({ label: inputValue, tagType: 'inline' });
     setAllTags(configTags);
-    saveTags(configTags);
+    saveTags({ label: inputValue, tagType: 'inline' });
     setInputValue('');
     if (ref.current) ref.current.focus();
     setInputValue('');
@@ -149,7 +149,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
         state.schema.marks.customTagInline.create({
           ...((mark && mark.attrs) || {}),
           tags,
-          class: tags.toString().replace(/ /g, '-'),
+          class: tags.toString().replace(/ /g, '-').toLowerCase(),
         }),
       ),
     );
@@ -176,7 +176,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
             state.schema.marks.customTagInline.create({
               ...((mark && mark.attrs) || {}),
               tags,
-              class: tags.toString().replace(/ /g, '-'),
+              class: tags.toString().replace(/ /g, '-').toLowerCase(),
             }),
           ),
         );

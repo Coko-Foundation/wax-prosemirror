@@ -121,7 +121,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     if (inputValue.trim() === '') return;
     configTags.push({ label: inputValue, tagType: 'block' });
     setAllTags(configTags);
-    saveTags(configTags);
+    saveTags({ label: inputValue, tagType: 'block' });
     setInputValue('');
     if (ref.current) ref.current.focus();
   };
@@ -130,10 +130,6 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     if (event.key === 'Enter' || event.which === 13) {
       onClickAdd();
     }
-  };
-
-  const onSelectTag = val => {
-    item.run(state, dispatch, val.replace(/ /g, '-'));
   };
 
   const renderTagList = () => {
@@ -151,7 +147,9 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
             disabled={isDisabled}
             key={uuidv4()}
             label={blockTag.label}
-            onMouseDown={() => onSelectTag(blockTag.label)}
+            onMouseDown={() => {
+              item.run(activeView.state, activeView.dispatch, blockTag.label);
+            }}
             title={blockTag.label}
           />
         </TagBoxWrapper>,
