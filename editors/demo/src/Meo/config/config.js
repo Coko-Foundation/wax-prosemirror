@@ -9,7 +9,7 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
+  // TablesService,
   TableToolGroupService,
   BaseService,
   // BaseToolGroupService,
@@ -61,6 +61,7 @@ import {
   InlineAnnotationsService,
   InlineCtxCodeService,
   MeoAnnotationsToolGroupService,
+  ExtTablesService as TablesService
 } from '../services';
 
 // const updateTitle = title => {

@@ -21,6 +21,23 @@ demo += `<div>
 <!--    <span class="lingua-diversa">un’altra lingua nel testo</span>,-->
 <!--    <span class="stile-da-definire">un testo con uno stile da definire</span>.-->
 </p>
+<table>
+<tr>
+  <td style="vertical-align: top; text-align: left">top-left</td>
+  <td style="vertical-align: top; text-align: center">top-center</td>
+  <td style="vertical-align: top; text-align: right">top-right</td>
+</tr>
+<tr>
+  <td style="vertical-align: middle; text-align: left">middle-left</td>
+  <td style="vertical-align: middle; text-align: center">middle-center</td>
+  <td style="vertical-align: middle; text-align: right">middle-right</td>
+</tr>
+<tr>
+  <td style="vertical-align: bottom; text-align: left">bottom-left</td>
+  <td style="vertical-align: bottom; text-align: center">bottom-center</td>
+  <td style="vertical-align: bottom; text-align: right">bottom-right</td>
+</tr>
+</table>
 </div>`;
 
 export { demo };
