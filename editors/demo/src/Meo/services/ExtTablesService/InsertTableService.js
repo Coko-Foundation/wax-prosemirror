@@ -21,7 +21,6 @@ class InsertTableService extends Service {
         halign: {
           default: null,
           getFromDOM: dom => dom.style['text-align'],
-// dom.getAttribute('style').replace(/^.*?\btext-align:\s*(left|center|right|justify)\b.*$/, '$1');
           setDOMAttr: ( halign, attrs ) => {
             let style = attrs.style || '';
             style += `; text-align: ${halign}`;
@@ -30,7 +29,6 @@ class InsertTableService extends Service {
         },
         valign: {
           default: null,
-          // getFromDOM: dom => dom.getAttribute('style').replace(/^.*?\bvertical-align:\s*(top|middle|bottom)\b.*$/, '$1'),
           getFromDOM: dom => dom.style['vertical-align'],
           setDOMAttr: ( valign, attrs ) => {
             let style = attrs.style || '';
