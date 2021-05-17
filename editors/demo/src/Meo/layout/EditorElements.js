@@ -13,8 +13,7 @@ const fontWriting = css`
 export default css`
   .ProseMirror {
     background: white;
-    /* counter-reset: footnote multinote; */
-    counter-reset: multinote;
+    counter-reset: footnote;
     line-height: 1.6;
     ${fontWriting}
 
@@ -55,8 +54,8 @@ export default css`
     font-size: 14px;
   } */
 
-  /* .ProseMirror footnote, */
-  .Prosemirror multinote {
+  .ProseMirror footnote,
+  .ProseMirror multinote {
     font-variant-numeric: lining-nums proportional-nums;
     display: inline-block;
     text-align: center;
@@ -68,21 +67,13 @@ export default css`
     cursor: pointer;
   }
 
-  /* .ProseMirror footnote::after, */
-  .Prosemirror multinote::after {
+  .ProseMirror footnote::after,
+  .ProseMirror multinote::after {
+    content: counter(footnote);
     position: relative;
     bottom: 2px;
     font-size: 16px;
-  }
-
-  /* .ProseMirror footnote::after {
-    content: counter(footnote);
     counter-increment: footnote;
-  } */
-
-  .Prosemirror multinote::after {
-    content: counter(multinote);
-    counter-increment: multinote;
   }
 
   hr {
@@ -252,16 +243,14 @@ export default css`
   span.deletion {
     text-decoration: line-through;
     color: ${th('colorError')};
-    /* footnote, */
-    multinote {
+    footnote {
       background: ${th('colorError')};
     }
   }
 
   span.insertion {
     color: royalblue;
-    /* footnote, */
-    multinote {
+    footnote {
       background: royalblue;
     }
   }
@@ -492,7 +481,7 @@ export default css`
     display: inline;
     font-style: italic;
     color: blue;
-    background-color: rgb(210,210,210);
+    background-color: rgb(210, 210, 210);
   }
 
   i.enfasi1 {
@@ -528,7 +517,7 @@ export default css`
   span.ord-latino {
     font-variant: small-caps;
     text-transform: lowercase;
-    background-color: #AFDDE9;
+    background-color: #afdde9;
   }
 
   .stile-da-definire {
@@ -537,7 +526,7 @@ export default css`
   }
 
   .context {
-    color: rgb(150,220,150) !important;
+    color: rgb(150, 220, 150) !important;
     background: black !important;
     padding: 4px;
     text-indent: 0px;
@@ -549,5 +538,4 @@ export default css`
     white-space: pre-wrap;
     margin: 0px;
   }
-
 `;
