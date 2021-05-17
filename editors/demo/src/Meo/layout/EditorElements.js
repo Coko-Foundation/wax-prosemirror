@@ -13,7 +13,8 @@ const fontWriting = css`
 export default css`
   .ProseMirror {
     background: white;
-    counter-reset: footnote;
+    /* counter-reset: footnote multinote; */
+    counter-reset: multinote;
     line-height: 1.6;
     ${fontWriting}
 
@@ -54,7 +55,8 @@ export default css`
     font-size: 14px;
   } */
 
-  .ProseMirror footnote, .Prosemirror multinote {
+  /* .ProseMirror footnote, */
+  .Prosemirror multinote {
     font-variant-numeric: lining-nums proportional-nums;
     display: inline-block;
     text-align: center;
@@ -66,18 +68,17 @@ export default css`
     cursor: pointer;
   }
 
-  .ProseMirror footnote::after, .Prosemirror multinote::after {
-    content: counter(footnote);
+  /* .ProseMirror footnote::after, */
+  .Prosemirror multinote::after {
     position: relative;
     bottom: 2px;
     font-size: 16px;
-    counter-increment: footnote;
   }
 
-  .ProseMirror footnote::after {
+  /* .ProseMirror footnote::after {
     content: counter(footnote);
     counter-increment: footnote;
-  }
+  } */
 
   .Prosemirror multinote::after {
     content: counter(multinote);
@@ -251,14 +252,16 @@ export default css`
   span.deletion {
     text-decoration: line-through;
     color: ${th('colorError')};
-    footnote {
+    /* footnote, */
+    multinote {
       background: ${th('colorError')};
     }
   }
 
   span.insertion {
     color: royalblue;
-    footnote {
+    /* footnote, */
+    multinote {
       background: royalblue;
     }
   }

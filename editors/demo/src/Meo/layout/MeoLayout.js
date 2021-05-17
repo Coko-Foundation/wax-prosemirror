@@ -168,7 +168,8 @@ const NotesAreaContainer = styled.div`
 
 const NotesContainer = styled.div`
   box-shadow: 0 0 8px #ecedf1;
-  counter-reset: footnote-view;
+  /* counter-reset: footnote-view multinote-view; */
+  counter-reset: multinote-view;
   display: flex;
   flex-direction: column;
   padding-bottom: ${grid(4)};
@@ -195,7 +196,7 @@ const onResizeEnd = arr => {
 const getNotes = main => {
   const notes = DocumentHelpers.findChildrenByType(
     main.state.doc,
-    main.state.schema.nodes.footnote,
+    main.state.schema.nodes.multinote,
     true,
   );
   return notes;
