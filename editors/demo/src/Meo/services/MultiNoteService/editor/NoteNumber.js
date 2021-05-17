@@ -1,0 +1,25 @@
+/* eslint react/prop-types: 0 */
+import React from 'react';
+import styled from 'styled-components';
+
+const NoteNumberStyled = styled.div`
+  display: flex;
+  margin-right: 10px;
+  margin-top: 18px;
+
+  &:after {
+    content: counter(multinote-view) '.';
+    counter-increment: multinote-view;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+`;
+
+const onClick = () => {};
+
+const NoteNumber = ({ number }) => {
+  return <NoteNumberStyled onClick={onClick} />;
+};
+
+export default NoteNumber;

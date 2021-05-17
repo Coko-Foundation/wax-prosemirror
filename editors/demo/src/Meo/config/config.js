@@ -17,8 +17,8 @@ import {
   DisplayToolGroupService,
   TextBlockLevelService,
   TextToolGroupService,
-  NoteService,
-  NoteToolGroupService,
+  // NoteService,
+  // NoteToolGroupService,
   TrackChangeService,
   CommentsService,
   CodeBlockService,
@@ -61,7 +61,9 @@ import {
   InlineAnnotationsService,
   InlineCtxCodeService,
   MeoAnnotationsToolGroupService,
-  ExtTablesService as TablesService
+  ExtTablesService as TablesService,
+  MultiNoteService as NoteService,
+  MultiNoteToolGroupService as NoteToolGroupService,
 } from '../services';
 
 // const updateTitle = title => {

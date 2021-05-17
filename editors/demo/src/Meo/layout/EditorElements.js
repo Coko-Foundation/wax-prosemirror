@@ -54,7 +54,7 @@ export default css`
     font-size: 14px;
   } */
 
-  .ProseMirror footnote {
+  .ProseMirror footnote, .Prosemirror multinote {
     font-variant-numeric: lining-nums proportional-nums;
     display: inline-block;
     text-align: center;
@@ -66,12 +66,22 @@ export default css`
     cursor: pointer;
   }
 
-  .ProseMirror footnote::after {
+  .ProseMirror footnote::after, .Prosemirror multinote::after {
     content: counter(footnote);
     position: relative;
     bottom: 2px;
     font-size: 16px;
     counter-increment: footnote;
+  }
+
+  .ProseMirror footnote::after {
+    content: counter(footnote);
+    counter-increment: footnote;
+  }
+
+  .Prosemirror multinote::after {
+    content: counter(multinote);
+    counter-increment: multinote;
   }
 
   hr {
