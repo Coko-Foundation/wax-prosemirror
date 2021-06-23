@@ -2,7 +2,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
@@ -15,11 +15,23 @@ const EditorComponent = ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   let questionView;
   const questionId = node.attrs.id;
+  const isEditable = context.view.main.props.editable(editable => {
+    return editable;
+  });
+
+  const {
+    view: { main },
+    activeViewId,
+  } = context;
+
+  if (activeViewId === node.attrs.id && context.view[activeViewId].focused) {
+  }
 
   useEffect(() => {
     questionView = new EditorView(
       { mount: editorRef.current },
       {
+        editable: () => isEditable,
         state: EditorState.create({
           doc: node,
           plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
@@ -29,11 +41,24 @@ const EditorComponent = ({ node, view, getPos }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, questionId);
+            context.view[activeViewId].dispatch(
+              context.view[activeViewId].state.tr.setSelection(
+                TextSelection.between(
+                  context.view[activeViewId].state.selection.$anchor,
+                  context.view[activeViewId].state.selection.$head,
+                ),
+              ),
+            );
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
             if (questionView.hasFocus()) questionView.focus();
           },
+        },
+        handleKeyDown: (editoView, keyEvent) => {
+          if (keyEvent.key === 'Enter') {
+            console.log('create new');
+          }
         },
 
         attributes: {
@@ -49,6 +74,7 @@ const EditorComponent = ({ node, view, getPos }) => {
       },
       questionId,
     );
+    questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {

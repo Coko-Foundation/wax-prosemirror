@@ -1,17 +1,15 @@
-const footnote = {
-  group: 'notes inline',
+const feedBackNode = {
+  group: 'inline',
   content: 'inline*',
   inline: true,
-  atom: true,
+  // atom: true,
   attrs: {
     id: { default: '' },
   },
-  toDOM: node => {
-    return ['footnote', node.attrs];
-  },
+  toDOM: node => ['feedback', node.attrs, 0],
   parseDOM: [
     {
-      tag: 'footnote',
+      tag: 'feedback',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),
@@ -21,4 +19,4 @@ const footnote = {
   ],
 };
 
-export default footnote;
+export default feedBackNode;

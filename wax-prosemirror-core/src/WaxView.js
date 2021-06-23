@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useMemo,
   useEffect,
+  useState,
 } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
@@ -21,11 +22,12 @@ import WaxOptions from './WaxOptions';
 const WaxPortals = ComponentPlugin('waxPortals');
 
 let previousDoc;
-let view;
+
 export default props => {
   const { readonly, onBlur, debug, autoFocus, user, targetFormat } = props;
   const editorRef = useRef();
-
+  let view;
+  const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
 
@@ -33,7 +35,7 @@ export default props => {
 
   const schema = context.app.getSchema();
 
-  if (!view) {
+  if (!mounted) {
     context.app.bootServices();
   }
 
@@ -63,9 +65,9 @@ export default props => {
             scrollThreshold: 200,
             handleDOMEvents: {
               blur: onBlur
-                ? // eslint-disable-next-line no-shadow
-                  view => {
-                    onBlur(view.state.doc.content);
+                ? editorView => {
+                    const serialize = props.serializer(schema);
+                    onBlur(serialize(editorView.state.doc.content));
                   }
                 : null,
             },
@@ -77,6 +79,8 @@ export default props => {
             },
           },
         );
+
+        setMounted(true);
 
         context.updateView(
           {
@@ -126,11 +130,11 @@ export default props => {
     }
     if (targetFormat === 'JSON') {
       if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-        props.onChange(schema)(state.doc.toJSON());
+        props.onChange(state.doc.toJSON());
     } else {
       // eslint-disable-next-line no-lonely-if
       if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-        props.onChange(schema)(state.doc.content);
+        props.onChange(state.doc.content);
     }
   };
 
