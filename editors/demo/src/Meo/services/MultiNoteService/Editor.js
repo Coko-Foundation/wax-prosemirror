@@ -12,7 +12,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import NoteEditorContainer from './editor/NoteEditorContainer';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import transformPasted from './helpers/TransformPasted';
-import trackedTransaction from 'wax-prosemirror-services/src/TrackChangeService/track-changes/trackedTransaction';
+import { trackedTransaction } from 'wax-prosemirror-services';
 
 export default ({ node, view }) => {
   const editorRef = useRef();

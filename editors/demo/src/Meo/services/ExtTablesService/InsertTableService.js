@@ -1,6 +1,6 @@
 import { Service } from 'wax-prosemirror-services';
 import { tableNodes, goToNextCell } from 'prosemirror-tables';
-import Table from 'wax-prosemirror-services/src/TablesService/InsertTableService/Table';
+import Table from './Table';
 
 class InsertTableService extends Service {
   boot() {
