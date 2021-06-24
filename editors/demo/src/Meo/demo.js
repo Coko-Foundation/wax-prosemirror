@@ -29,7 +29,7 @@ demo += `<div>
 </tr>
 <tr>
   <td style="vertical-align: middle; text-align: left">middle-left</td>
-  <td style="vertical-align: middle; text-align: center">middle-center</td>
+  <td style="vertical-align: middle; text-align: center"><p>middle-center</p><p>second paragraph</p></td>
   <td style="vertical-align: middle; text-align: right">middle-right</td>
 </tr>
 <tr>
