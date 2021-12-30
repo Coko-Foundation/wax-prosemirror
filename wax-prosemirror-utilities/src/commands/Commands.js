@@ -240,9 +240,29 @@ const createCommentOnFootnote = (state, dispatch, group, viewid) => {
 
 const isInTable = state => {
   const { $head } = state.selection;
-  for (let d = $head.depth; d > 0; d--)
+  for (let d = $head.depth; d > 0; d -= 1)
     if ($head.node(d).type.spec.tableRole === 'row') return true;
   return false;
+};
+
+const simulateKey = (view, keyCode, key) => {
+  const event = document.createEvent('Event');
+  event.initEvent('keydown', true, true);
+  event.keyCode = keyCode;
+  event.key = event.code = key;
+  return view.someProp('handleKeyDown', f => f(view, event));
+};
+
+const isParentOfType = (state, nodeType) => {
+  let status = false;
+  const predicate = node => node.type === nodeType;
+  for (let i = state.selection.$from.depth; i > 0; i -= 1) {
+    const node = state.selection.$from.node(i);
+    if (predicate(node)) {
+      status = true;
+    }
+  }
+  return status;
 };
 
 export default {
@@ -256,4 +276,6 @@ export default {
   createTable,
   markActive,
   isOnSameTextBlock,
+  simulateKey,
+  isParentOfType,
 };

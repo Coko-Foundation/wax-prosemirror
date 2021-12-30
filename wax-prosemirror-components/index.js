@@ -1,5 +1,6 @@
 export { default as Overlay } from './src/components/Overlay';
 export { default as Button } from './src/components/Button';
+export { default as UndoRedoButton } from './src/components/UndoRedoButton';
 export { default as MenuButton } from './src/ui/buttons/MenuButton';
 export { default as icons } from './src/icons/icons';
 export { default as TableDropDown } from './src/components/tables/TableDropDown';
@@ -31,3 +32,5 @@ export { default as CustomTagInlineComponent } from './src/components/customtag/
 export { default as CustomTagInlineOverlayComponent } from './src/components/customtag/CustomTagInlineOverlayCompoment';
 export { default as CustomTagBlockComponent } from './src/components/customtag/CustomTagBlockComponent';
 export { default as SaveButton } from './src/components/SaveButton';
+
+export { default as ReactDropDownStyles } from './src/helpers/ReactDropDownStyles';

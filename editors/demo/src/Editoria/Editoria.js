@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useMemo } from 'react';
+import React, { useLayoutEffect, useState, useMemo, useRef } from 'react';
 
 import { Wax } from 'wax-prosemirror-core';
 
@@ -38,11 +38,13 @@ const Editoria = () => {
     finalConfig = configMobile;
     key = 'editoriaMobile';
   }
+  const editorRef = useRef();
 
   const EditoriaComponent = useMemo(
     () => (
       <>
         <Wax
+          ref={editorRef}
           key={key}
           config={finalConfig}
           autoFocus
@@ -51,10 +53,9 @@ const Editoria = () => {
           value={demo}
           // readonly
           layout={layout}
-          onChange={debounce(source => {
-            console.log(source);
-          }, 200)}
-          onBlur={source => console.log(source)}
+          // onChange={debounce(source => {
+          //   console.log(JSON.stringify(source));
+          // }, 200)}
           user={user}
         />
       </>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 
 import Editoria from './Editoria/Editoria';
@@ -19,9 +19,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const activeStyles = css`
+  background: #535e76;
+  color: #fff;
+  padding: 5px 15px 5px 15px;
+`;
+
 const ProjectContainer = styled.div`
   display: flex;
-  height: calc(100% - 55px);
+  height: calc(100% - 65px);
 `;
 
 const ChooseProject = styled.div`
@@ -29,7 +35,7 @@ const ChooseProject = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 50px;
+  height: 60px;
 
   span {
     margin-right: 20px;
@@ -38,11 +44,20 @@ const ChooseProject = styled.div`
 
 const Projects = styled.div`
   margin-left: 10px;
+
+  span {
+    font-size: 16px;
+  }
 `;
 
 const ProjectButton = styled.button`
+  border: 1px solid #535e76;
   cursor: pointer;
+  color: #535e76;
   margin-right: 20px;
+  background: #fff;
+  padding: 4px 14px 4px 14px;
+  ${props => props.isActive && activeStyles}
 `;
 
 const Editors = () => {
@@ -50,14 +65,12 @@ const Editors = () => {
 
   const displayProject = () => {
     switch (project) {
+      case 'hhmi':
+        return <HHMI />;
+      case 'ncbi':
+        return <NCBI />;
       case 'editoria':
         return <Editoria />;
-      // case 'hhmi':
-      //   return <HHMI />;
-      case 'meo':
-        return <Meo />;
-      case 'ncbi':
-        break;
       default:
         return <Meo />;
     }
@@ -69,12 +82,30 @@ const Editors = () => {
       <ChooseProject>
         <Projects>
           <span>Select Project:</span>
-          <ProjectButton onClick={() => setProject('editoria')}>
+          <ProjectButton
+            isActive={project === 'editoria'}
+            onClick={() => setProject('editoria')}
+          >
             Editoria
           </ProjectButton>
-          {/* <ProjectButton onClick={() => setProject('hhmi')}>HHMI</ProjectButton> */}
-          <ProjectButton onClick={() => setProject('meo')}>Meo</ProjectButton>
-          {/* <ProjectButton onClick={() => setProject('ncbi')}>NCBI</ProjectButton> */}
+          <ProjectButton
+            isActive={project === 'hhmi'}
+            onClick={() => setProject('hhmi')}
+          >
+            Widget Example
+          </ProjectButton>
+          <ProjectButton
+            isActive={project === 'ncbi'}
+            onClick={() => setProject('ncbi')}
+          >
+            Basic Editors
+          </ProjectButton>
+          <ProjectButton
+            isActive={project === 'meo'}
+            onClick={() => setProject('meo')}
+          >
+            Basic Editors
+          </ProjectButton>
         </Projects>
       </ChooseProject>
       <ProjectContainer>{displayProject()}</ProjectContainer>

@@ -1,10 +1,8 @@
 /* eslint react/prop-types: 0 */
-
 import React, { useState, useContext, useMemo, useRef } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-
 import MenuButton from '../../ui/buttons/MenuButton';
 import InsertTableTool from '../../ui/tables/InsertTableTool';
 import useOnClickOutside from '../../helpers/useOnClickOutside';
@@ -24,20 +22,18 @@ const DropWrapper = styled.div`
 const CreateTable = ({ view = {}, item }) => {
   const {
     view: { main },
-    activeViewId,
+    activeView,
   } = useContext(WaxContext);
-  if (item.onlyOnMain) {
-    view = main;
-  }
 
-  const { state } = view;
   const { icon, run, select, title } = item;
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
   const dropComponent = (
     <InsertTableTool
-      onGridSelect={colRows => handleSelect(colRows, view.state, view.dispatch)}
+      onGridSelect={colRows =>
+        handleSelect(colRows, activeView.state, activeView.dispatch)
+      }
     />
   );
 
@@ -46,7 +42,7 @@ const CreateTable = ({ view = {}, item }) => {
     setIsOpen(!isOpen);
   };
 
-  let isDisabled = !select(state, activeViewId);
+  let isDisabled = !select(activeView);
 
   const isEditable = main.props.editable(editable => {
     return editable;

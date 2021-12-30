@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import Dropdown from '../ui/buttons/Dropdown';
 
 const Wrapper = styled.div`
-  display: inline-flex;
   align-items: center;
+  display: inline-flex;
   padding: 0 4px;
 
   > button,
@@ -36,8 +36,8 @@ const ToolGroupComponent = ({ view, tools, name }) => {
         {toolsShown}
         {rest.length > 0 && (
           <Dropdown
-            iconName="more"
             dropComponent={<DropWrapper>{rest}</DropWrapper>}
+            iconName="more"
             title="Show more tools"
           />
         )}

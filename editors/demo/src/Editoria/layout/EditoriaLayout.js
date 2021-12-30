@@ -7,9 +7,6 @@ import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 
-/* Katex css */
-import '~../../katex/dist/katex.min.css';
-
 const divider = css`
   .panelGroup {
     background: #fff;
@@ -50,7 +47,7 @@ const Wrapper = styled.div`
 const Main = styled.div`
   display: flex;
   flex-grow: 1;
-  height: calc(100% - 40px);
+  height: 100%;
 `;
 
 const TopMenu = styled.div`

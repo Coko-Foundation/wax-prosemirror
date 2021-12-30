@@ -32,6 +32,7 @@ export default css`
     custom-tag-block::selection,
     custom-tag-inline::selection {
       background-color: transparent;
+      color: #000;
     }
 
     &:focus {
@@ -348,7 +349,7 @@ export default css`
   }
 
   .math-node.ProseMirror-selectednode .math-src {
-    display: flex;
+    display: inline-flex;
   }
   .math-node.ProseMirror-selectednode .math-render {
     display: none;
@@ -385,6 +386,7 @@ export default css`
 
   math-display .math-render {
     display: block;
+    text-align: center;
   }
 
   math-display.ProseMirror-selectednode {
@@ -401,10 +403,6 @@ export default css`
     content: '$$';
     text-align: left;
     color: #b0b0b0;
-  }
-
-  math-display .katex-display {
-    margin: 0;
   }
 
   /* -- Selection Plugin ---------------------------------- */

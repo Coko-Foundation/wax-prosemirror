@@ -11,7 +11,6 @@ import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
 import { NoteEditorContainer } from 'wax-prosemirror-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import transformPasted from './helpers/TransformPasted';
 import trackedTransaction from '../TrackChangeService/track-changes/trackedTransaction';
 
 export default ({ node, view }) => {
@@ -37,6 +36,7 @@ export default ({ node, view }) => {
         }),
         // This is the magic part
         dispatchTransaction,
+        disallowedTools: ['Tables', 'Images'],
         handleDOMEvents: {
           blur: () => {
             if (context.view[noteId]) {
@@ -56,14 +56,11 @@ export default ({ node, view }) => {
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
-            if (noteView.hasFocus()) noteView.focus();
+            // if (noteView.hasFocus()) noteView.focus();
           },
         },
         handleTextInput: (editorView, from, to, text) => {
           typing = true;
-        },
-        transformPasted: slice => {
-          return transformPasted(slice, noteView);
         },
 
         attributes: {
@@ -86,13 +83,22 @@ export default ({ node, view }) => {
 
   const dispatchTransaction = transaction => {
     const { user } = view.props;
+
     const TrackChange = context.app.config.get(
       'config.EnableTrackChangeService',
     );
 
-    const tr = TrackChange.enabled
-      ? trackedTransaction(transaction, noteView.state, user, 'notes', noteId)
-      : transaction;
+    let tr = transaction;
+
+    if (TrackChange && TrackChange.enabled) {
+      tr = trackedTransaction(
+        transaction,
+        noteView.state,
+        user,
+        'notes',
+        noteId,
+      );
+    }
 
     const { state, transactions } = noteView.state.applyTransaction(tr);
     noteView.updateState(state);
@@ -111,6 +117,10 @@ export default ({ node, view }) => {
     setTimeout(() => {
       if (clickInNote) context.updateView({}, noteId);
       clickInNote = false;
+      if (typing) {
+        context.updateView({}, noteId);
+        typing = false;
+      }
       if (noteView.state.selection.from !== noteView.state.selection.to)
         context.updateView({}, noteId);
     }, 20);

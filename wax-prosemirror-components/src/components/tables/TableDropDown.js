@@ -4,7 +4,11 @@ import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
 import { WaxContext } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import ReactDropDownStyles from '../../helpers/ReactDropDownStyles';
+
+const Wrapper = styled.span`
+  ${ReactDropDownStyles};
+`;
 
 const DropdownStyled = styled(Dropdown)`
   display: inline-flex;
@@ -13,6 +17,7 @@ const DropdownStyled = styled(Dropdown)`
 
   .Dropdown-control {
     border: none;
+    padding-top: 12px;
 
     &:hover {
       box-shadow: none;
@@ -20,8 +25,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 
   .Dropdown-arrow {
-    right: 25px;
-    top: 14px;
+    top: 17px;
   }
 
   .Dropdown-menu {
@@ -67,23 +71,25 @@ const TableDropDown = ({ item }) => {
 
   const TableDropDownComponent = useMemo(
     () => (
-      <DropdownStyled
-        onChange={option => {
-          item.run(
-            activeView.state,
-            activeView.dispatch,
-            tablesFn[option.value],
-          );
-          setSelectedOption(option.value);
+      <Wrapper>
+        <DropdownStyled
+          onChange={option => {
+            item.run(
+              activeView.state,
+              activeView.dispatch,
+              tablesFn[option.value],
+            );
+            setSelectedOption(option.value);
 
-          setTimeout(() => {
-            activeView.focus();
-          });
-        }}
-        options={appliedDropDownOptions}
-        placeholder="Table Options"
-        select={isDisabled}
-      />
+            setTimeout(() => {
+              activeView.focus();
+            });
+          }}
+          options={appliedDropDownOptions}
+          placeholder="Table Options"
+          select={isDisabled}
+        />
+      </Wrapper>
     ),
     [isDisabled, selectedOption, appliedDropDownOptions],
   );

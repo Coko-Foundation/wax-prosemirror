@@ -2,12 +2,14 @@ import { css } from 'styled-components';
 
 import { th } from '@pubsweet/ui-toolkit';
 
+//import 'wax-prosemirror-core/dist/index.css';
+
 /* All styles regarding ProseMirror surface and elements */
 
 const fontWriting = css`
+  color: ${th('colorText')};
   font-family: ${th('fontWriting')};
   font-size: ${th('fontSizeBase')};
-  color: ${th('colorText')};
 `;
 
 export default css`
@@ -32,6 +34,7 @@ export default css`
     custom-tag-block::selection,
     custom-tag-inline::selection {
       background-color: transparent;
+      color: #000;
     }
 
     &:focus {
@@ -92,21 +95,6 @@ export default css`
         content: 'Caption: ';
         font-weight: bold;
       }
-    }
-  }
-
-  .question {
-    border: 1px solid green;
-    counter-reset: question-item-multiple;
-    margin: 38px;
-    padding: 20px;
-
-    &:before {
-      bottom: 45px;
-      content: 'Answer Group ' counter(multiple-question) '.';
-      counter-increment: multiple-question;
-      position: relative;
-      right: 20px;
     }
   }
 
@@ -292,6 +280,7 @@ export default css`
 
   math-display .math-render {
     display: block;
+    text-align: center;
   }
 
   math-display.ProseMirror-selectednode {
@@ -308,10 +297,6 @@ export default css`
     content: '$$';
     text-align: left;
     color: #b0b0b0;
-  }
-
-  math-display .katex-display {
-    margin: 0;
   }
 
   /* -- Selection Plugin ---------------------------------- */
@@ -333,5 +318,98 @@ export default css`
 
   .transform-icon {
     transform: rotate(40deg);
+  }
+
+  /* -- Questions ---------------------------------- */
+
+  /* -- Multiple Choice ---------------------------------- */
+
+  .multiple-choice,
+  .multiple-choice-single-correct,
+  .true-false,
+  .true-false-single-correct {
+    border: 3px solid #f5f5f7;
+    counter-reset: question-item-multiple;
+    margin: 38px;
+    padding: 20px;
+    padding-top: 0px;
+
+    &:before {
+      bottom: 25px;
+      counter-increment: multiple-question;
+      position: relative;
+      right: 20px;
+    }
+
+    .ProseMirror {
+      box-shadow: none;
+      padding: 5px 5px 0 5px;
+    }
+  }
+
+  .multiple-choice {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question) ' (multiple choice)';
+    }
+  }
+
+  .multiple-choice-single-correct {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question)
+        ' (multiple choice single correct)';
+    }
+  }
+
+  .true-false {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question) ' (true/false)';
+    }
+  }
+
+  .true-false-single-correct {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question)
+        ' (true/false single correct)';
+    }
+  }
+
+  /* -- Fill The Gap ---------------------------------- */
+
+  .fill-the-gap {
+    border: 3px solid #f5f5f7;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    padding: 3px;
+
+    &:before {
+      background-color: #fff;
+      bottom: 22px;
+      color: #535e76;
+      content: 'Fill The Gap';
+      height: 10px;
+      left: -1px;
+      position: relative;
+      width: 30px;
+    }
+  }
+
+  /* -- Essay ---------------------------------- */
+
+  .essay {
+    border: 3px solid #f5f5f7;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    padding: 3px;
+
+    &:before {
+      background-color: #fff;
+      bottom: 22px;
+      color: #535e76;
+      content: 'Essay';
+      height: 10px;
+      left: -1px;
+      position: relative;
+      width: 30px;
+    }
   }
 `;

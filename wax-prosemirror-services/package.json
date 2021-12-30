@@ -1,10 +1,11 @@
 {
   "name": "wax-prosemirror-services",
-  "author": "Christos Kokosias",
-  "version": "0.0.49",
+  "author": "Christos Kokosias & Giannis Kopanas",
+  "version": "0.2.3",
   "description": "Wax prosemirror services",
   "license": "MIT",
   "main": "dist/index.js",
+  "style": "dist/index.css",
   "files": [
     "dist"
   ],
@@ -13,26 +14,28 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "antd": "^4.15.4",
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "lodash": "^4.17.4",
-    "prosemirror-commands": "1.1.7",
-    "prosemirror-history": "1.1.3",
+    "prosemirror-commands": "1.1.10",
+    "prosemirror-history": "1.2.0",
     "prosemirror-inputrules": "1.1.3",
     "prosemirror-keymap": "1.1.4",
-    "prosemirror-model": "1.13.3",
+    "prosemirror-model": "1.14.3",
     "prosemirror-schema-list": "1.1.4",
     "prosemirror-state": "1.3.3",
     "prosemirror-transform": "1.2.6",
-    "prosemirror-view": "1.18.0",
-    "styled-components": "^4.2.0",
+    "prosemirror-view": "1.20.1",
+    "styled-components": "^5.3.0",
     "use-deep-compare-effect": "^1.3.1",
     "uuid": "^7.0.3",
-    "wax-prosemirror-components": "^0.0.49",
-    "wax-prosemirror-core": "^0.0.49",
-    "wax-prosemirror-plugins": "^0.0.49",
-    "wax-prosemirror-schema": "^0.0.49",
-    "wax-prosemirror-utilities": "^0.0.49"
+    "wax-prosemirror-components": "^0.2.3",
+    "wax-prosemirror-core": "^0.2.3",
+    "wax-prosemirror-plugins": "^0.2.3",
+    "wax-prosemirror-schema": "^0.2.3",
+    "wax-prosemirror-utilities": "^0.2.3"
   },
   "peerDependencies": {
     "react": "^16.13.1",
