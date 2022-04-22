@@ -1,10 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const multipleChoiceSingleCorrectNode = {
   attrs: {
     class: { default: 'multiple-choice-option-single-correct' },
-    id: { default: uuidv4() },
+    id: { default: '' },
     correct: { default: false },
+    answer: { default: false },
     feedback: { default: '' },
   },
   group: 'block questions',
@@ -19,6 +18,7 @@ const multipleChoiceSingleCorrectNode = {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           correct: JSON.parse(dom.getAttribute('correct').toLowerCase()),
+          answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
           feedback: dom.getAttribute('feedback'),
         };
       },

@@ -2,6 +2,7 @@ import { commentMark } from 'wax-prosemirror-schema';
 import { RightArea, CommentBubbleComponent } from 'wax-prosemirror-components';
 import { CommentPlugin, CopyPasteCommentPlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
+import './comments.css';
 
 const PLUGIN_KEY = 'commentPlugin';
 
@@ -16,10 +17,7 @@ export default class CommentsService extends Service {
     const layout = this.container.get('Layout');
     createOverlay(
       CommentBubbleComponent,
-      {
-        showComment: activeViewId => activeViewId === 'main',
-        group: 'main',
-      },
+      {},
       {
         markType: '',
         followCursor: false,

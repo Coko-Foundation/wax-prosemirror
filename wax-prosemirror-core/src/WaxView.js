@@ -1,14 +1,16 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prop-types */
 import React, {
   useRef,
+  useState,
   useContext,
   useCallback,
   useMemo,
   useEffect,
-  useState,
   forwardRef,
   useImperativeHandle,
 } from 'react';
+import styled from 'styled-components';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -17,10 +19,16 @@ import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import ComponentPlugin from './ComponentPlugin';
 import WaxOptions from './WaxOptions';
-import getDocContent from './helpers/GetDocContent';
+import helpers from './helpers/helpers';
 import './styles/styles.css';
 
+const EditorContainer = styled.div`
+  height: 100%;
+  position: relative;
+`;
+
 const WaxPortals = ComponentPlugin('waxPortals');
+const WaxOverlays = ComponentPlugin('waxOverlays');
 
 let previousDoc;
 
@@ -28,6 +36,7 @@ const WaxView = forwardRef((props, ref) => {
   let view;
   const {
     browserSpellCheck,
+    customValues,
     readonly,
     debug,
     autoFocus,
@@ -47,16 +56,12 @@ const WaxView = forwardRef((props, ref) => {
 
   if (!mounted) {
     context.app.bootServices();
+    context.app.getShortCuts();
+    context.app.getRules();
   }
 
   const setEditorRef = useCallback(
-    // eslint-disable-next-line consistent-return
     node => {
-      if (WaxEditorRef.current) {
-        // this is where you do cleanup if you have to. the WaxEditorRef.current will
-        // still point to the old ref, the old node. so you have some time here to
-        // clean up the unmount if you need to.
-      }
       if (node) {
         const options = WaxOptions({
           ...props,
@@ -68,6 +73,7 @@ const WaxView = forwardRef((props, ref) => {
           { mount: node },
           {
             editable: () => !readonly,
+            customValues,
             state: EditorState.create(options),
             dispatchTransaction,
             disallowedTools: [],
@@ -76,6 +82,13 @@ const WaxView = forwardRef((props, ref) => {
             scrollThreshold: 200,
             attributes: {
               spellcheck: browserSpellCheck ? 'true' : 'false',
+            },
+            handleDOMEvents: {
+              blur: (editorView, event) => {
+                if (view && event.relatedTarget === null) {
+                  view.focus();
+                }
+              },
             },
           },
         );
@@ -89,16 +102,17 @@ const WaxView = forwardRef((props, ref) => {
           'main',
         );
         if (debug) applyDevTools(view);
-        if (autoFocus)
+        if (autoFocus && view)
           setTimeout(() => {
-            if (view) view.focus();
+            view.focus();
           }, 1000);
 
         return () => view.destroy();
       }
       WaxEditorRef.current = node;
+      return true;
     },
-    [readonly],
+    [readonly, customValues],
   );
 
   useEffect(() => {
@@ -107,7 +121,7 @@ const WaxView = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getContent() {
-      return getDocContent(schema, serializer, targetFormat, context);
+      return helpers.getDocContent(schema, serializer, targetFormat, context);
     },
   }));
 
@@ -145,10 +159,11 @@ const WaxView = forwardRef((props, ref) => {
   };
 
   const editor = (
-    <>
+    <EditorContainer>
       <div ref={setEditorRef} />
+      <WaxOverlays activeViewId="main" group="main" />
       <WaxPortals />
-    </>
+    </EditorContainer>
   );
 
   return useMemo(
@@ -156,7 +171,7 @@ const WaxView = forwardRef((props, ref) => {
       props.children({
         editor,
       }),
-    [readonly],
+    [readonly, customValues],
   );
 });
 

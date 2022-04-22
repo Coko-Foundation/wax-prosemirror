@@ -1,6 +1,6 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
+import styled from 'styled-components';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
 import { EditorState, TextSelection } from 'prosemirror-state';
@@ -8,10 +8,17 @@ import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { NoteEditorContainer } from 'wax-prosemirror-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import trackedTransaction from '../TrackChangeService/track-changes/trackedTransaction';
+
+const NoteContainer = styled.div`
+  display: flex;
+  position: relative;
+`;
+
+let WaxOverlays = () => true;
 
 export default ({ node, view }) => {
   const editorRef = useRef();
@@ -20,12 +27,19 @@ export default ({ node, view }) => {
   let noteView;
   let clickInNote = false;
   let typing = false;
-  // eslint-disable-next-line react/destructuring-assignment
-  const isEditable = context.view.main.props.editable(editable => {
+
+  const {
+    activeViewId,
+    pmViews,
+    pmViews: { main },
+  } = context;
+
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
   useEffect(() => {
+    WaxOverlays = ComponentPlugin('waxOverlays');
     noteView = new EditorView(
       { mount: editorRef.current },
       {
@@ -34,17 +48,14 @@ export default ({ node, view }) => {
           doc: node,
           plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
         }),
-        // This is the magic part
         dispatchTransaction,
-        disallowedTools: ['Tables', 'Images'],
+        disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],
         handleDOMEvents: {
-          blur: () => {
-            if (context.view[noteId]) {
-              context.view[noteId].dispatch(
-                context.view[noteId].state.tr.setSelection(
-                  new TextSelection(
-                    context.view[noteId].state.tr.doc.resolve(0),
-                  ),
+          blur: (editorView, event) => {
+            if (pmViews[noteId]) {
+              pmViews[noteId].dispatch(
+                pmViews[noteId].state.tr.setSelection(
+                  new TextSelection(pmViews[noteId].state.tr.doc.resolve(0)),
                 ),
               );
             }
@@ -53,9 +64,6 @@ export default ({ node, view }) => {
           mousedown: () => {
             context.updateView({}, noteId);
             clickInNote = true;
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
             // if (noteView.hasFocus()) noteView.focus();
           },
         },
@@ -76,8 +84,8 @@ export default ({ node, view }) => {
       },
       noteId,
     );
-    if (context.view[noteId]) {
-      context.view[noteId].focus();
+    if (pmViews[noteId]) {
+      pmViews[noteId].focus();
     }
   }, []);
 
@@ -138,7 +146,7 @@ export default ({ node, view }) => {
       const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(noteFound[0].pos + 1);
       for (let i = 0; i < transactions.length; i++) {
-        let { steps } = transactions[i];
+        const { steps } = transactions[i];
         for (let j = 0; j < steps.length; j++)
           outerTr.step(steps[j].map(offsetMap));
       }
@@ -160,12 +168,11 @@ export default ({ node, view }) => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
-      // 'Mod-u': () => Commands.markActive(noteView.state.config.schema.marks.underline)(noteView.state),
     };
   };
 
-  if (context.view[noteId]) {
-    const { state } = context.view[noteId];
+  if (pmViews[noteId]) {
+    const { state } = pmViews[noteId];
     const start = node.content.findDiffStart(state.doc.content);
     if (start != null) {
       let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
@@ -174,7 +181,7 @@ export default ({ node, view }) => {
         endA += overlap;
         endB += overlap;
       }
-      context.view[noteId].dispatch(
+      pmViews[noteId].dispatch(
         state.tr
           .replace(start, endB, node.slice(start, endA))
           .setMeta('fromOutside', true),
@@ -185,5 +192,11 @@ export default ({ node, view }) => {
     () => <NoteEditorContainer ref={editorRef} />,
     [],
   );
-  return <>{NoteEditorContainerComponent}</>;
+
+  return (
+    <NoteContainer>
+      {NoteEditorContainerComponent}
+      <WaxOverlays activeViewId={noteId} group="notes" />
+    </NoteContainer>
+  );
 };

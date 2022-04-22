@@ -1,6 +1,6 @@
-import AbstractNodeView from '../PortalService/AbstractNodeView';
+import QuestionsNodeView from '../lib/helpers/QuestionsNodeView';
 
-export default class EssayNodeView extends AbstractNodeView {
+export default class EssayAnswerNodeView extends QuestionsNodeView {
   constructor(
     node,
     view,
@@ -19,19 +19,11 @@ export default class EssayNodeView extends AbstractNodeView {
   }
 
   static name() {
-    return 'essay';
-  }
-
-  update(node) {
-    return true;
+    return 'essay_answer';
   }
 
   stopEvent(event) {
-    console.log(event.target.type);
-    if (event.target.type === 'textarea') {
-      return true;
-    }
-    const innerView = this.context.view[this.node.attrs.id];
+    const innerView = this.context.pmViews[this.node.attrs.id];
     return innerView && innerView.dom.contains(event.target);
   }
 }

@@ -11,7 +11,6 @@ import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { filter, groupBy, debounce } from 'lodash';
-import CharactersList from './CharactersList';
 
 const Wrapper = styled.div`
   width: 400px;
@@ -91,33 +90,29 @@ const SpecialCharacter = styled.div`
   border: 1px solid ${th('colorPrimary')};
   border-radius: 50%;
   &:hover {
-    background: white;
+    background: ${th('colorPrimary')};
   }
   span {
     font-size: 16px;
     text-align: center;
     padding-top: 3px;
-    color: white;
+    color: ${th('colorPrimary')};
 
     &:hover {
-      color: ${th('colorPrimary')};
+      color: #fff;
     }
   }
     ${override('Wax.SpecialCharacterButton')}
 
 `;
 
-// const LastUsedComponent = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   height: 30px;
-// `;
-
 const SpecialCharactersComponent = ({ close }) => {
   const searchRef = useRef(null);
-  const { activeView } = useContext(WaxContext);
+  const { activeView, app } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
   const [isFirstRun, setFirstRun] = useState(true);
+
+  const CharactersList = app.config.get('config.SpecialCharactersService');
 
   const [specialCharactersList, setSpecialCharactersList] = useState(
     CharactersList,
@@ -191,11 +186,11 @@ const SpecialCharactersComponent = ({ close }) => {
     <Wrapper>
       <SearchInputContainer>
         <SearchInput
+          onChange={onChange}
+          placeholder="Search"
           ref={searchRef}
           type="text"
-          placeholder="Search"
           value={searchValue}
-          onChange={onChange}
         />
       </SearchInputContainer>
       <CharactersListComponent>{renderList()}</CharactersListComponent>

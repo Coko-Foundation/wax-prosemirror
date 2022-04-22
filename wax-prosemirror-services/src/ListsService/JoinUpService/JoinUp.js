@@ -2,9 +2,8 @@ import { joinUp } from 'prosemirror-commands';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class JoinUp extends Tools {
+export default class JoinUp extends Tools {
   title = 'Join with above block';
   icon = 'arrowUp';
   name = 'JoinUp';
@@ -25,6 +24,9 @@ class JoinUp extends Tools {
       });
     }
 
+    if (from === null) return false;
+    const { disallowedTools } = activeView.props;
+    if (disallowedTools.includes('Lists')) status = false;
     return status;
   };
 

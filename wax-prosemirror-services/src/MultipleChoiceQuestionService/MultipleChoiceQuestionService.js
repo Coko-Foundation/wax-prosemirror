@@ -5,11 +5,13 @@ import multipleChoiceContainerNode from './schema/multipleChoiceContainerNode';
 import questionNode from './schema/questionNode';
 import AnswerComponent from './components/AnswerComponent';
 import QuestionComponent from './components/QuestionComponent';
+import MultipleChoiceContainerNodeView from './MultipleChoiceContainerNodeView';
 import MultipleChoiceNodeView from './MultipleChoiceNodeView';
 import QuestionNodeView from './QuestionNodeView';
 import MultipleChoiceSingleCorrectQuestionService from './MultipleChoiceSingleCorrectQuestionService/MultipleChoiceSingleCorrectQuestionService';
 import TrueFalseQuestionService from './TrueFalseQuestionService/TrueFalseQuestionService';
 import TrueFalseSingleCorrectQuestionService from './TrueFalseSingleCorrectQuestionService/TrueFalseSingleCorrectQuestionService';
+import './multipleQuestionStyles.css';
 
 class MultipleChoiceQuestionService extends Service {
   register() {
@@ -28,6 +30,12 @@ class MultipleChoiceQuestionService extends Service {
     createNode({
       question_node_multiple: questionNode,
     });
+
+    // addPortal({
+    //   nodeView: MultipleChoiceContainerNodeView,
+    //   component: QuestionComponent,
+    //   context: this.app,
+    // });
 
     addPortal({
       nodeView: QuestionNodeView,

@@ -1,11 +1,31 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Switch as AntSwitch } from 'antd';
-
+import Switch from 'rc-switch';
 import { grid } from '@pubsweet/ui-toolkit';
 
-const Wrapper = styled.span``;
+const Wrapper = styled.span`
+  button {
+    width: 55px;
+  }
+
+  .rc-switch-inner {
+    left: 31px;
+  }
+
+  .rc-switch-checked {
+    border: 1px solid #008000;
+    background-color: #008000;
+
+    .rc-switch-inner {
+      left: 6px;
+    }
+    :after {
+      left: 33px;
+    }
+  }
+`;
 
 const Label = styled.span`
   ${props =>
@@ -21,7 +41,7 @@ const Label = styled.span`
     `}
 `;
 
-const Switch = props => {
+const SwitchComponent = props => {
   const { className, label, labelPosition, ...rest } = props;
 
   return (
@@ -30,7 +50,7 @@ const Switch = props => {
         <Label labelPosition={labelPosition}>{label}</Label>
       )}
 
-      <AntSwitch {...rest} />
+      <Switch {...rest} />
 
       {label && labelPosition === 'right' && (
         <Label labelPosition={labelPosition}>{label}</Label>
@@ -39,14 +59,14 @@ const Switch = props => {
   );
 };
 
-Switch.propTypes = {
+SwitchComponent.propTypes = {
   label: PropTypes.string,
   labelPosition: PropTypes.string,
 };
 
-Switch.defaultProps = {
+SwitchComponent.defaultProps = {
   label: null,
   labelPosition: 'right',
 };
 
-export default Switch;
+export default SwitchComponent;

@@ -1,15 +1,19 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState, TextSelection, NodeSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
-import { baseKeymap } from 'prosemirror-commands';
+import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
+import {
+  splitListItem,
+  liftListItem,
+  sinkListItem,
+} from 'prosemirror-schema-list';
 import Placeholder from '../plugins/placeholder';
 
 const EditorWrapper = styled.div`
@@ -27,6 +31,18 @@ const EditorWrapper = styled.div`
       outline: none;
     }
 
+    :empty::before {
+      content: 'Type your question';
+      color: #aaa;
+      float: left;
+      font-style: italic;
+      pointer-events: none;
+    }
+
+    p:first-child {
+      margin: 0;
+    }
+
     p.empty-node:first-child::before {
       content: attr(data-content);
     }
@@ -40,14 +56,17 @@ const EditorWrapper = styled.div`
     }
   }
 `;
-
 const QuestionEditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
+  const {
+    app,
+    pmViews: { main },
+  } = context;
   let questionView;
   const questionId = node.attrs.id;
-  const isEditable = context.view.main.props.editable(editable => {
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -56,19 +75,50 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   const createKeyBindings = () => {
     const keys = getKeys();
     Object.keys(baseKeymap).forEach(key => {
-      keys[key] = baseKeymap[key];
+      if (keys[key]) {
+        keys[key] = chainCommands(keys[key], baseKeymap[key]);
+      } else {
+        keys[key] = baseKeymap[key];
+      }
     });
     return keys;
+  };
+
+  const pressEnter = (state, dispatch) => {
+    if (state.selection.node && state.selection.node.type.name === 'image') {
+      const { $from, to } = state.selection;
+
+      const same = $from.sharedDepth(to);
+
+      const pos = $from.before(same);
+      dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
+      return true;
+    }
+    // LISTS
+    if (splitListItem(state.schema.nodes.list_item)(state)) {
+      splitListItem(state.schema.nodes.list_item)(state, dispatch);
+      return true;
+    }
+
+    return false;
   };
 
   const getKeys = () => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
+      'Mod-[': liftListItem(view.state.schema.nodes.list_item),
+      'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
+      //   Enter: () =>
+      //     splitListItem(questionView.state.schema.nodes.list_item)(
+      //       questionView.state,
+      //       questionView.dispatch,
+      //     ),
+      Enter: pressEnter,
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
   // eslint-disable-next-line no-shadow
   const createPlaceholder = placeholder => {
@@ -93,31 +143,32 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
           doc: node,
           plugins: finalPlugins,
         }),
-        // This is the magic part
         dispatchTransaction,
         disallowedTools: ['MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
-            context.view.main.dispatch(
-              context.view.main.state.tr.setSelection(
-                new TextSelection(
-                  context.view.main.state.tr.doc.resolve(getPos() + 2),
-                ),
-              ),
-            );
-            // context.view[activeViewId].dispatch(
-            //   context.view[activeViewId].state.tr.setSelection(
-            //     TextSelection.between(
-            //       context.view[activeViewId].state.selection.$anchor,
-            //       context.view[activeViewId].state.selection.$head,
-            //     ),
-            //   ),
-            // );
             context.updateView({}, questionId);
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
+            main.dispatch(
+              main.state.tr
+                .setMeta('outsideView', questionId)
+                .setSelection(
+                  new TextSelection(
+                    main.state.tr.doc.resolve(
+                      getPos() +
+                        2 +
+                        context.pmViews[questionId].state.selection.to,
+                    ),
+                  ),
+                ),
+            );
+            context.updateView({}, questionId);
+
             if (questionView.hasFocus()) questionView.focus();
+          },
+          blur: (editorView, event) => {
+            if (questionView && event.relatedTarget === null) {
+              questionView.focus();
+            }
           },
         },
 

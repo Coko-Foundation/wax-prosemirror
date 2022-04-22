@@ -1,53 +1,48 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import styled from 'styled-components';
-import Switch from './Switch';
-
-const StyledSwitch = styled(Switch)`
-  display: flex;
-  margin-left: auto;
-
-  span:nth-child(1) {
-    // bottom: 36px;
-    // display: flex;
-    // left: 4px;
-    // position: relative;
-    // width: 0px;
-  }
-
-  .ant-switch-checked {
-    background-color: green;
-  }
-`;
+import YesNoSwitch from './YesNoSwitch';
 
 const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const [checked, setChecked] = useState(false);
+  const [checkedAnswerMode, setCheckedAnswerMode] = useState(false);
   const {
-    view: { main },
+    pmViews,
+    pmViews: { main },
   } = context;
+
+  const customProps = main.props.customValues;
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   useEffect(() => {
     const allNodes = getNodes(main);
     allNodes.forEach(singNode => {
       if (singNode.node.attrs.id === node.attrs.id) {
         setChecked(singNode.node.attrs.correct);
+        setCheckedAnswerMode(singNode.node.attrs.answer);
       }
     });
   }, [getNodes(main)]);
 
   const handleChange = () => {
     setChecked(!checked);
+    setCheckedAnswerMode(!checkedAnswerMode);
+    const key = isEditable ? 'correct' : 'answer';
+    const value = isEditable ? !checked : !checkedAnswerMode;
     const allNodes = getNodes(main);
+
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         main.dispatch(
           main.state.tr.setNodeMarkup(getPos(), undefined, {
             ...singleNode.node.attrs,
-            correct: !checked,
+            [key]: value,
           }),
         );
       }
@@ -55,13 +50,13 @@ const CustomSwitch = ({ node, getPos }) => {
   };
 
   return (
-    <StyledSwitch
+    <YesNoSwitch
       checked={checked}
-      checkedChildren="YES"
-      label="Correct?"
-      labelPosition="left"
-      onChange={handleChange}
-      unCheckedChildren="NO"
+      checkedAnswerMode={checkedAnswerMode}
+      customProps={customProps}
+      handleChange={handleChange}
+      isEditable={isEditable}
+      node={node}
     />
   );
 };

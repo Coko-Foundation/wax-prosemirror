@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useEffect } from 'react';
@@ -10,16 +9,16 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
+import InputComponent from './InputComponent';
 
 const EditorWrapper = styled.span`
   display: inline-flex;
 
   > .ProseMirror {
-    background: #a6a6a6 !important;
-    border: 1px solid #a6a6a6;
+    border-bottom: 1px solid #a6a6a6 !important;
     border-radius: 4px;
     box-shadow: none;
-    color: #fff !important;
+    color: #008000;
     display: inline;
     min-width: 50px;
     padding: 0px 2px 0px 2px !important;
@@ -49,9 +48,13 @@ const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
+  const {
+    app,
+    pmViews: { main },
+  } = context;
   let gapView;
   const questionId = node.attrs.id;
-  const isEditable = context.view.main.props.editable(editable => {
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -72,11 +75,9 @@ const EditorComponent = ({ node, view, getPos }) => {
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
   finalPlugins = finalPlugins.concat([...plugins]);
-
-  const { activeViewId } = context;
 
   useEffect(() => {
     gapView = new EditorView(
@@ -89,23 +90,35 @@ const EditorComponent = ({ node, view, getPos }) => {
           doc: node,
           plugins: finalPlugins,
         }),
-        // This is the magic part
+
         dispatchTransaction,
-        disallowedTools: ['Images', 'Lists', 'lift', 'Tables', 'FillTheGap'],
+        disallowedTools: [
+          'Images',
+          'Lists',
+          'lift',
+          'Tables',
+          'FillTheGap',
+          'Gap',
+          'MultipleChoice',
+          'Essay',
+        ],
         handleDOMEvents: {
           mousedown: () => {
-            context.view[activeViewId].dispatch(
-              context.view[activeViewId].state.tr.setSelection(
-                TextSelection.between(
-                  context.view[activeViewId].state.selection.$anchor,
-                  context.view[activeViewId].state.selection.$head,
+            main.dispatch(
+              main.state.tr
+                .setMeta('outsideView', questionId)
+                .setSelection(
+                  new TextSelection(
+                    main.state.tr.doc.resolve(
+                      getPos() +
+                        2 +
+                        context.pmViews[questionId].state.selection.to,
+                    ),
+                  ),
                 ),
-              ),
             );
             context.updateView({}, questionId);
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
+
             if (gapView.hasFocus()) gapView.focus();
           },
         },
@@ -145,9 +158,15 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper>
-      <div ref={editorRef} />
-    </EditorWrapper>
+    <>
+      {isEditable ? (
+        <EditorWrapper>
+          <div ref={editorRef} />
+        </EditorWrapper>
+      ) : (
+        <InputComponent getPos={getPos} node={node} view={view} />
+      )}
+    </>
   );
 };
 

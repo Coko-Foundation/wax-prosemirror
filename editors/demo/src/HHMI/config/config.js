@@ -26,10 +26,12 @@ import {
   FillTheGapToolGroupService,
   MultipleDropDownToolGroupService,
   EssayService,
+  EssayToolGroupService,
+  MatchingService,
+  MatchingToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 
 export default {
@@ -40,6 +42,7 @@ export default {
         'Base',
         {
           name: 'Annotations',
+          // exclude: ['LinkTool'],
           more: [
             'Superscript',
             'Subscript',
@@ -52,8 +55,9 @@ export default {
         'Images',
         'Tables',
         'MultipleDropDown',
-        'MultipleChoice',
+        'Essay',
         'FillTheGap',
+        'Matching',
         'FullScreen',
       ],
     },
@@ -62,20 +66,18 @@ export default {
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
 
-  PmPlugins: [
-    columnResizing(),
-    tableEditing(),
-    invisibles([hardBreak()]),
-    WaxSelectionPlugin,
-  ],
+  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
+    new MatchingService(),
+    new MatchingToolGroupService(),
     new FillTheGapQuestionService(),
     new FillTheGapToolGroupService(),
     new MultipleChoiceQuestionService(),
     new MultipleChoiceToolGroupService(),
     new MultipleDropDownToolGroupService(),
     new EssayService(),
+    new EssayToolGroupService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),

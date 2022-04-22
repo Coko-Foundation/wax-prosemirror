@@ -61,11 +61,23 @@ export default class Application {
     return this.schema.getSchema();
   }
 
+  getShortCuts() {
+    this.shortCuts = this.container.get('ShortCuts');
+    this.PmPlugins.add('shortcuts', this.shortCuts.createShortCuts());
+  }
+
+  getRules() {
+    this.rules = this.container.get('Rules');
+    this.PmPlugins.add('rules', this.rules.createRules());
+  }
+
   resetApp() {
     this.container = {};
     this.config = {};
     this.PmPlugins = {};
     this.schema = {};
+    this.shortCuts = {};
+    this.rules = {};
   }
 
   static create(config) {
@@ -77,6 +89,7 @@ export default class Application {
             return coreService.concat(configService);
           };
         }
+        return true;
       },
     });
 

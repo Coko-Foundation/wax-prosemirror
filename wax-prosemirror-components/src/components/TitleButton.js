@@ -9,7 +9,7 @@ const TitleButton = ({ view = {}, item }) => {
 
   const {
     app,
-    view: { main },
+    pmViews: { main },
     activeViewId,
     activeView,
   } = useContext(WaxContext);
@@ -34,9 +34,10 @@ const TitleButton = ({ view = {}, item }) => {
 
   useEffect(() => {
     if (titleNode[0]) {
-      serviceConfig.updateTitle(titleNode[0].node.textContent);
+      if (serviceConfig)
+        serviceConfig.updateTitle(titleNode[0].node.textContent);
     } else {
-      serviceConfig.updateTitle('');
+      if (serviceConfig) serviceConfig.updateTitle('');
     }
   }, [chapterTitle]);
 

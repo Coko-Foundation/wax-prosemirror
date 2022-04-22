@@ -7,13 +7,13 @@ const trueFalseContainerNode = {
   atom: true,
   selectable: true,
   draggable: true,
-  content: 'block+',
+  content: 'block*',
   parseDOM: [
     {
       tag: 'div.true-false',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
         };
       },

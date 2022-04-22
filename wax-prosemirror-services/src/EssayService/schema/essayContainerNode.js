@@ -1,9 +1,10 @@
-const essayNode = {
+const essayContainerNode = {
   attrs: {
-    class: { default: 'essay' },
     id: { default: '' },
+    class: { default: 'essay' },
   },
   group: 'block questions',
+  atom: true,
   selectable: true,
   draggable: true,
   content: 'block+',
@@ -12,7 +13,7 @@ const essayNode = {
       tag: 'div.essay',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
         };
       },
@@ -23,4 +24,4 @@ const essayNode = {
   },
 };
 
-export default essayNode;
+export default essayContainerNode;

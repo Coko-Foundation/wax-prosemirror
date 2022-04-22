@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useState, useEffect } from 'react';
@@ -20,17 +19,31 @@ const FeedBackInput = styled.input`
   border: none;
   display: flex;
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  ::placeholder {
+    color: rgb(170, 170, 170);
+    font-style: italic;
+  }
 `;
 
-export default ({ node, view, getPos }) => {
+export default ({ node, view, getPos, readOnly }) => {
   const context = useContext(WaxContext);
+  const {
+    app,
+    pmViews: { main },
+  } = context;
+
   const [feedBack, setFeedBack] = useState(' ');
   const [isFirstRun, setFirstRun] = useState(true);
   const [typing, setTyping] = useState(false);
   const feedBackRef = useRef(null);
 
   useEffect(() => {
-    const allNodes = getNodes(context.view.main);
+    const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         if (!typing || context.transaction.meta.inputType === 'Redo') {
@@ -42,14 +55,14 @@ export default ({ node, view, getPos }) => {
         }
       }
     });
-  }, [getNodes(context.view.main)]);
+  }, [getNodes(main)]);
 
   const handleKeyDown = e => {
     setTyping(true);
     if (e.key === 'Backspace') {
-      context.view.main.dispatch(
-        context.view.main.state.tr.setSelection(
-          TextSelection.create(context.view.main.state.tr.doc, null),
+      main.dispatch(
+        main.state.tr.setSelection(
+          TextSelection.create(main.state.tr.doc, null),
         ),
       );
     }
@@ -60,11 +73,11 @@ export default ({ node, view, getPos }) => {
   };
 
   const saveFeedBack = () => {
-    const allNodes = getNodes(context.view.main);
+    const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
-        context.view.main.dispatch(
-          context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+        main.dispatch(
+          main.state.tr.setNodeMarkup(getPos(), undefined, {
             ...singleNode.node.attrs,
             feedback: feedBack,
           }),
@@ -76,10 +89,8 @@ export default ({ node, view, getPos }) => {
   };
 
   const onFocus = () => {
-    context.view.main.dispatch(
-      context.view.main.state.tr.setSelection(
-        TextSelection.create(context.view.main.state.tr.doc, null),
-      ),
+    main.dispatch(
+      main.state.tr.setSelection(TextSelection.create(main.state.tr.doc, null)),
     );
   };
 
@@ -87,6 +98,7 @@ export default ({ node, view, getPos }) => {
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
       <FeedBackInput
+        readOnly={readOnly}
         onBlur={saveFeedBack}
         onChange={feedBackInput}
         onFocus={onFocus}

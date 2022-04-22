@@ -43,11 +43,14 @@ const DropComponent = ({ title, view, tools }) => {
   const {
     activeView,
     activeViewId,
-    view: { main },
+    pmViews: { main },
   } = context;
   const { state } = view;
 
   const [label, setLabel] = useState(null);
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   const dropDownOptions = [
     {
@@ -73,14 +76,18 @@ const DropComponent = ({ title, view, tools }) => {
   ];
 
   useEffect(() => {
+    setLabel('Multiple Question Types');
     dropDownOptions.forEach((option, i) => {
       if (option.item.active(main.state)) {
-        setLabel(option.label);
+        setTimeout(() => {
+          setLabel(option.label);
+        });
       }
     });
   }, [activeViewId]);
 
-  const isDisabled = tools[0].select(state, activeView);
+  let isDisabled = tools[0].select(state, activeView);
+  if (!isEditable) isDisabled = false;
 
   const onChange = option => {
     tools[option.value].run(main, context);

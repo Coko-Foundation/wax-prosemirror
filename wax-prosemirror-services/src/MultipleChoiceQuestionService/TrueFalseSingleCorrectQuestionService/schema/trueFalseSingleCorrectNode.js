@@ -1,10 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const trueFalseSingleCorrectNode = {
   attrs: {
+    id: { default: '' },
     class: { default: 'true-false-single-correct-option' },
-    id: { default: uuidv4() },
     correct: { default: false },
+    answer: { default: false },
     feedback: { default: '' },
   },
   group: 'block questions',
@@ -19,6 +18,7 @@ const trueFalseSingleCorrectNode = {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           correct: JSON.parse(dom.getAttribute('correct').toLowerCase()),
+          answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
           feedback: dom.getAttribute('feedback'),
         };
       },

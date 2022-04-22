@@ -1,14 +1,18 @@
-import Service from '../Service';
 import { LinkComponent } from 'wax-prosemirror-components';
 import { linkMark } from 'wax-prosemirror-schema';
+import Service from '../Service';
 import LinkTool from './LinkTool';
-// import { OverlayService } from '../..';
+import linkRule from './LinkInputRule';
 
 export default class LinkService extends Service {
   name = 'LinkService';
 
   boot() {
     const createOverlay = this.container.get('CreateOverlay');
+    const createRule = this.container.get('CreateRule');
+    const {
+      schema: { schema },
+    } = this.app;
     createOverlay(
       LinkComponent,
       {},
@@ -18,6 +22,7 @@ export default class LinkService extends Service {
         selection: false,
       },
     );
+    createRule([linkRule(schema.marks.link)]);
   }
 
   register() {
@@ -30,6 +35,4 @@ export default class LinkService extends Service {
       { toWaxSchema: true },
     );
   }
-
-  // dependencies = [new OverlayService()];
 }

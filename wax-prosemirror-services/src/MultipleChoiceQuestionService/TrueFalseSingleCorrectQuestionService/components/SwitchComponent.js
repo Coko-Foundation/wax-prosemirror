@@ -4,42 +4,45 @@ import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { NodeSelection } from 'prosemirror-state';
-import styled from 'styled-components';
-import Switch from '../../components/Switch';
-
-const StyledSwitch = styled(Switch)`
-  display: flex;
-  margin-left: auto;
-
-  .ant-switch-checked {
-    background-color: green;
-  }
-`;
+import TrueFalseSwitch from '../../TrueFalseQuestionService/components/TrueFalseSwitch';
 
 const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const [checked, setChecked] = useState(false);
+  const [checkedAnswerMode, setCheckedAnswerMode] = useState(false);
+
   const {
-    view: { main },
+    pmViews: { main },
   } = context;
+
+  const customProps = main.props.customValues;
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   useEffect(() => {
     const allNodes = getNodes(main);
     allNodes.forEach(singNode => {
       if (singNode.node.attrs.id === node.attrs.id) {
         setChecked(singNode.node.attrs.correct);
+        setCheckedAnswerMode(singNode.node.attrs.answer);
       }
     });
   }, [getNodes(main)]);
 
   const handleChange = () => {
     setChecked(!checked);
+    setCheckedAnswerMode(!checkedAnswerMode);
+    const key = isEditable ? 'correct' : 'answer';
+    const value = isEditable ? !checked : !checkedAnswerMode;
+
     main.dispatch(
       main.state.tr.setSelection(
         NodeSelection.create(main.state.doc, getPos()),
       ),
     );
-    const parentContainer = findParentOfType(
+    const parentContainer = DocumentHelpers.findParentOfType(
       main.state,
       main.state.config.schema.nodes.true_false_single_correct_container,
     );
@@ -63,7 +66,7 @@ const CustomSwitch = ({ node, getPos }) => {
       ) {
         tr.setNodeMarkup(getPos(), undefined, {
           ...element.attrs,
-          correct: !checked,
+          [key]: value,
         });
       } else if (
         element.type.name === 'true_false_single_correct' &&
@@ -71,7 +74,7 @@ const CustomSwitch = ({ node, getPos }) => {
       ) {
         tr.setNodeMarkup(parentPosition + position + 1, undefined, {
           ...element.attrs,
-          correct: false,
+          [key]: false,
         });
       }
     });
@@ -80,13 +83,13 @@ const CustomSwitch = ({ node, getPos }) => {
   };
 
   return (
-    <StyledSwitch
+    <TrueFalseSwitch
       checked={checked}
-      checkedChildren="True"
-      label="True/false?"
-      labelPosition="left"
-      onChange={handleChange}
-      unCheckedChildren="False"
+      checkedAnswerMode={checkedAnswerMode}
+      customProps={customProps}
+      handleChange={handleChange}
+      isEditable={isEditable}
+      node={node}
     />
   );
 };
@@ -103,15 +106,3 @@ const getNodes = view => {
 };
 
 export default CustomSwitch;
-
-const findParentOfType = (state, nodeType) => {
-  let nodeFound = '';
-  const predicate = node => node.type === nodeType;
-  for (let i = state.selection.$from.depth; i > 0; i -= 1) {
-    const node = state.selection.$from.node(i);
-    if (predicate(node)) {
-      nodeFound = node;
-    }
-  }
-  return nodeFound;
-};

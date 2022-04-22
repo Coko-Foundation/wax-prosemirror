@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useEffect } from 'react';
@@ -45,10 +44,14 @@ const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
-  const { activeViewId } = context;
+  const {
+    app,
+    activeViewId,
+    pmViews: { main },
+  } = context;
   let questionView;
   const questionId = node.attrs.id;
-  const isEditable = context.view.main.props.editable(editable => {
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -69,7 +72,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
   // eslint-disable-next-line no-shadow
   const createPlaceholder = placeholder => {
@@ -94,23 +97,20 @@ const EditorComponent = ({ node, view, getPos }) => {
           doc: node,
           plugins: finalPlugins,
         }),
-        // This is the magic part
+
         dispatchTransaction,
         disallowedTools: ['Images', 'Lists', 'lift', 'MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
-            context.view[activeViewId].dispatch(
-              context.view[activeViewId].state.tr.setSelection(
+            context.pmViews[activeViewId].dispatch(
+              context.pmViews[activeViewId].state.tr.setSelection(
                 TextSelection.between(
-                  context.view[activeViewId].state.selection.$anchor,
-                  context.view[activeViewId].state.selection.$head,
+                  context.pmViews[activeViewId].state.selection.$anchor,
+                  context.pmViews[activeViewId].state.selection.$head,
                 ),
               ),
             );
             context.updateView({}, questionId);
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
             if (questionView.hasFocus()) questionView.focus();
           },
         },

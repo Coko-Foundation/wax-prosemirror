@@ -1,8 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const multipleChoiceSingleCorrectContainerNode = {
   attrs: {
-    id: { default: uuidv4() },
+    id: { default: '' },
     class: { default: 'multiple-choice-single-correct' },
     correctId: { default: '' },
   },
@@ -10,13 +8,13 @@ const multipleChoiceSingleCorrectContainerNode = {
   atom: true,
   selectable: true,
   draggable: true,
-  content: 'block+',
+  content: 'block*',
   parseDOM: [
     {
       tag: 'div.multiple-choice-single-correct',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           correctId: dom.getAttribute('correctId'),
         };

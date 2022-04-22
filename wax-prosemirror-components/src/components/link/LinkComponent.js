@@ -1,13 +1,13 @@
 /* eslint react/prop-types: 0 */
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const Wrapper = styled.div`
   background: #fff;
-  background: #fff;
+  display: flex;
   border-radius: 1.03093% / 8%;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
@@ -17,12 +17,15 @@ const Wrapper = styled.div`
     color: #3a4863;
     text-decoration: none;
   }
+  ${override('Wax.LinkContainer')}
 `;
 
 const LinkWrapper = styled.div`
   display: inline-block;
-  width: 250px;
+  width: 150px;
   margin-right: 12px;
+
+  ${override('Wax.LinkWrapper')}
 `;
 
 const Input = styled.input`
@@ -32,10 +35,11 @@ const Input = styled.input`
   :focus {
     outline: none;
   }
+  ${override('Wax.LinkInput')}
 `;
 
 const ButtonGroup = styled.div`
-  display: inline-block;
+  display: flex;
 `;
 
 const StyledButton = styled.button`
@@ -43,13 +47,18 @@ const StyledButton = styled.button`
   background: ${th('colorPrimary')};
   cursor: pointer;
   color: #fff;
+
+  ${override('Wax.LinkCreate')}
 `;
 
 const StyledButtonCancel = styled.button`
   margin-right: 10px;
   background: #fff
   cursor: pointer;
-  color:${th('colorPrimary')};;
+  color:${th('colorPrimary')};
+
+    ${override('Wax.LinkCancel')}
+
 `;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
