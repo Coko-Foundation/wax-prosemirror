@@ -47,12 +47,12 @@ import {
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
+// import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 
 import invisibles, {
-  space,
+  //  space,
   hardBreak,
-  paragraph,
+  //  paragraph,
 } from '@guardian/prosemirror-invisibles';
 
 import {
@@ -74,9 +74,9 @@ const updateTitle = debounce(title => {
   console.log(title);
 }, 3000);
 
-const saveTags = tags => {
-  // console.log(tags);
-};
+// const saveTags = tags => {
+// console.log(tags);
+// };
 
 const updateTrackStatus = status => {
   // console.log('status', status);
@@ -94,12 +94,7 @@ export default {
         'Base',
         {
           name: 'Annotations',
-          more: [
-            'RomanNumeral',
-            'Acronym',
-            'Italic',
-            'Bold'
-          ],
+          more: ['RomanNumeral', 'Acronym', 'Italic', 'Bold'],
         },
         'HighlightToolGroup',
         'TransformToolGroup',
@@ -155,7 +150,7 @@ export default {
     columnResizing(),
     tableEditing(),
     invisibles([hardBreak()]),
-    WaxSelectionPlugin,
+    //    WaxSelectionPlugin,
   ],
   CustomTagService: {
     tags: [

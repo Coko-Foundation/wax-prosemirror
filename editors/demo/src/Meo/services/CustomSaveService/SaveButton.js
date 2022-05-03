@@ -1,19 +1,23 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useMemo, useEffect, useState } from 'react';
+import React, {
+  useContext,
+  useMemo,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { MenuButton } from 'wax-prosemirror-components';
 
 const SaveButton = ({ view = {}, item }) => {
-  const { icon, label, onlyOnMain, select, title } = item;
+  const { icon, label, select, title } = item;
 
   const {
     app,
-    view: { main },
+    pmViews: { main },
     activeViewId,
     activeView,
   } = useContext(WaxContext);
-
-  if (onlyOnMain) view = main;
 
   const { state } = view;
 
@@ -21,33 +25,36 @@ const SaveButton = ({ view = {}, item }) => {
 
   const saveService = app.config.get('config.CustomSaveService');
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
-    console.log('in my custom save');
-    // eslint-disable-next-line no-underscore-dangle
-    // view._props.onChange(state.doc.content);
-    setIsSaving(true);
-    saveService.saveContent(editorState.doc.toString());
-    // console.log('SAVE: ' + editorState.doc.toString());
-    // console.log(editorState.doc);
+  const handleMouseDown = useCallback((e, view) => {
+    if (view) {
+      const editorState = view.state;
+      // const editorDispatch = view.editorDispatch;
+      console.log('in my custom save');
+      // eslint-disable-next-line no-underscore-dangle
+      // view._props.onChange(state.doc.content);
+      setIsSaving(true);
+      saveService.saveContent(editorState.doc.toString());
+      // console.log('SAVE: ' + editorState.doc.toString());
+      // console.log(editorState.doc);
+    }
     setTimeout(() => {
       setIsSaving(false);
     }, 300);
-  };
-
-  const triggerSave = e => {
-    if ((e.key === 83 || e.keyCode === 83) && (e.metaKey || e.ctrlKey)) {
-      e.preventDefault();
-      handleMouseDown();
-      return false;
-    }
-    return true;
-  };
+  });
 
   useEffect(() => {
+    const triggerSave = e => {
+      if ((e.key === 83 || e.keyCode === 83) && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleMouseDown();
+        return false;
+      }
+      return true;
+    };
     document.addEventListener('keydown', triggerSave);
 
     return () => document.removeEventListener('keydown', triggerSave);
-  }, []);
+  }, [handleMouseDown]);
 
   let isDisabled = !select(state, activeViewId, activeView);
 
@@ -65,11 +72,11 @@ const SaveButton = ({ view = {}, item }) => {
         disabled={isDisabled}
         iconName={iconTodisplay}
         label={label}
-        onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
+        onMouseDown={e => handleMouseDown(e, view)}
         title={title}
       />
     ),
-    [isSaving, isDisabled],
+    [isDisabled, iconTodisplay, label, title, handleMouseDown, view],
   );
 
   return SaveButtonComponent;

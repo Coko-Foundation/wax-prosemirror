@@ -36,13 +36,13 @@ import {
   CustomTagService,
 } from 'wax-prosemirror-services';
 
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
+// import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 
 import invisibles, {
-  space,
+  //  space,
   hardBreak,
-  paragraph,
+  //  paragraph,
 } from '@guardian/prosemirror-invisibles';
 
 const updateTitle = title => {
@@ -87,14 +87,14 @@ export default {
     columnResizing(),
     tableEditing(),
     invisibles([hardBreak()]),
-    WaxSelectionPlugin,
+    //    WaxSelectionPlugin,
   ],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },
       { label: 'custom-tag-label-2', tagType: 'inline' },
-      { label: 'custom-tag-label-3', tagType: 'block' }
-    ]
+      { label: 'custom-tag-label-3', tagType: 'block' },
+    ],
   },
 
   // Always load first CommentsService and LinkService,

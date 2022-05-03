@@ -18,7 +18,8 @@
     "wax-prosemirror-components": "^0.5.2",
     "wax-prosemirror-core": "^0.5.2",
     "wax-prosemirror-plugins": "^0.5.2",
-    "wax-prosemirror-services": "^0.5.2"
+    "wax-prosemirror-services": "^0.5.2",
+    "wax-prosemirror-utilities": "^0.5.2"
   },
   "scripts": {
     "start": "react-app-rewired start",
