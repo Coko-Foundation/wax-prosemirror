@@ -28,6 +28,16 @@ const findMark = (state, PMmark, toArr = false) => {
 };
 
 const findNode = (state, PMnode, findInParent) => {
+  console.log(state.selection);
+
+  const { $head } = state.selection;
+  if (findInParent) {
+    for (let d = $head.depth; d > 0; d -= 1) {
+      console.log($head.node(d));
+      // if ($head.node(d).type.spec.tableRole === 'row') return true;
+    }
+  }
+
   let nodeFound;
   if (findInParent) {
     state.doc.nodesBetween(
