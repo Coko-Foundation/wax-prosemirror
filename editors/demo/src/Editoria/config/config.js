@@ -41,6 +41,8 @@ import invisibles, {
 
 import CharactersList from './CharactersList';
 
+import TranslationBlockService from '../TranslationBlockService/TranslationBlockService';
+
 // const updateTitle = title => {
 //   console.log(title);
 // };
@@ -233,6 +235,7 @@ export default {
         'Tables',
         'TrackingAndEditing',
         'FullScreen',
+        'TranslationBlockToolGroup'
       ],
     },
     {
@@ -343,5 +346,6 @@ export default {
     new HighlightService(),
     new BottomInfoService(),
     new TransformService(),
+    new TranslationBlockService()
   ],
 };
