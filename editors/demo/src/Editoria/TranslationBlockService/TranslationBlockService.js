@@ -7,7 +7,7 @@ import translations from '../TranslationBlockService/schema/translations';
 import translationBlock from '../TranslationBlockService/schema/translationBlock';
 import translationBlockType from '../TranslationBlockService/schema/translationBlockType';
 
-import BlockQuoteService from './BlockQuoteService/BlockQuoteService';
+import MyBlockQuoteService from './MyBlockQuoteService/MyBlockQuoteService';
 import TranslationBlockToolGroupService from './TranslationBlockToolGroupService/TranslationBlockToolGroupService';
 
 class TranslationBlockService extends Service {
@@ -22,7 +22,7 @@ class TranslationBlockService extends Service {
     createNode({ translation: translation });
   }
   dependencies = [
-    // new BlockQuoteService(),
+    new MyBlockQuoteService(),
     new TranslationBlockToolGroupService()
   ];
 }

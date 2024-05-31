@@ -1,11 +1,15 @@
+import React from 'react';
 import { injectable } from 'inversify';
-import { Tools } from 'wax-prosemirror-core';
+import { isEmpty } from 'lodash';
+import { wrapIn } from 'prosemirror-commands';
+import { NodeSelection } from 'prosemirror-state';
+import { Tools, LeftSideButton } from 'wax-prosemirror-core';
 
 @injectable()
-export default class BlockQuote extends Tools {
+export default class MyBlockQuote extends Tools {
   title = 'Change to Block Quote';
-  label = 'Block Quote';
-  name = 'BlockQuote';
+  label = 'My Block Quote';
+  name = 'MyBlockQuote';
 
   get run() {
     return (state, dispatch) => {
