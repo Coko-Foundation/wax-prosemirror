@@ -1,10 +1,12 @@
 import { Service } from 'wax-prosemirror-core';
-import TranslationBlockToolGroup from './TranslationBlock';
+import TranslationBlockTool from './TranslationBlockTool';
+import TranslationBlockToolGroup from './TranslationBlockToolGroup';
 
 class TranslationBlockToolGroupService extends Service {
   name = 'TranslationBlockToolGroupService';
 
   register() {
+    this.container.bind('TranslationBlockTool').to(TranslationBlockTool);
     this.container.bind('TranslationBlockToolGroup').to(TranslationBlockToolGroup);
   }
 }

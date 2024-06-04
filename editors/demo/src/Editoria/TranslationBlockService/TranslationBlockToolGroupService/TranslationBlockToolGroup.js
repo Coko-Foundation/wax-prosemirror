@@ -8,11 +8,13 @@ import { ToolGroup, ToolGroupComponent } from 'wax-prosemirror-core';
 class TranslationBlockToolGroup extends ToolGroup {
   tools = [];
   constructor(
-    @inject('MyBlockQuote') blockQuote,
+    @inject('MyBlockQuote') blockQuoteTool,
+    @inject('TranslationBlockTool') translationBlockTool,
   ) {
     super();
     this.tools = [
-      blockQuote
+      blockQuoteTool,
+      translationBlockTool
     ];
   }
 

@@ -1,0 +1,44 @@
+import { QuestionsNodeView } from 'wax-prosemirror-core';
+
+export default class TranslationBlockNodeView extends QuestionsNodeView {
+  constructor(
+    node,
+    view,
+    getPos,
+    decorations,
+    createPortal,
+    Component,
+    context,
+  ) {
+    super(node, view, getPos, decorations, createPortal, Component, context);
+
+    this.node = node;
+    this.outerView = view;
+    this.getPos = getPos;
+    this.context = context;
+  }
+
+  static name() {
+    return 'translation_block';
+  }
+
+  update(node) {
+    if (node.type.name === 'paragraph') {
+      if (!node.sameMarkup(this.node)) return false;
+    }
+    return super.update(node);
+  }
+
+  stopEvent(event) {
+    if (
+      event.target.type === 'textarea' ||
+      event.target.type === 'text' ||
+      event.target.type === 'button' ||
+      !event.target.type
+    ) {
+      return true;
+    }
+    const innerView = this.context.pmViews[this.node.attrs.id];
+    return innerView && innerView.dom.contains(event.target);
+  }
+}
