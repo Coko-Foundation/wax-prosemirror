@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import ContainerEditor from './ContainerEditor';
+import EditorComponent from './EditorComponent';
 
 const TranslationBlockWrapper = styled.div`
   display: flex;
@@ -67,7 +67,7 @@ export default ({ node, view, getPos }) => {
       </TranslationBlockTool>
       <TranslationBlock className="translation-block">
         <TranslationWrapper>
-          {/* <ContainerEditor getPos={getPos} node={node} view={view} /> */}
+          <EditorComponent getPos={getPos} node={node} view={view} />
         </TranslationWrapper>
       </TranslationBlock>
     </TranslationBlockWrapper>

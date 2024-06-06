@@ -26,51 +26,44 @@ const EditorWrapper = styled.div`
   }
 `;
 
-const ContainerEditor = ({ node, view, getPos }) => {
+const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
-
   const context = useContext(WaxContext);
-  const { app } = context;
+  const translationBlockId = node.attrs.id;
 
-  let containerView;
-  const blockId = node.attrs.id;
+  let editorView;
 
   useEffect(() => {
-    containerView = new EditorView(
+    editorView = new EditorView(
       {
         mount: editorRef.current,
       },
       {
-        editable: () => false,
         state: EditorState.create({
-          doc: node,
-          plugins: [...app.getPlugins()],
+          doc: node
         }),
         dispatchTransaction,
         disallowedTools: [
           'Images',
           'Lists',
           'lift',
-          'Tables',
-          'FillTheGap',
-          'MultipleChoice',
+          'Tables'
         ],
       },
     );
 
-    // Set Each note into Wax's Context
     context.updateView(
       {
-        [blockId]: containerView,
+        [translationBlockId]: editorView,
       },
-      blockId,
+      translationBlockId,
     );
   }, []);
 
   const dispatchTransaction = tr => {
-    const { state, transactions } = containerView.state.applyTransaction(tr);
-    containerView.updateState(state);
-    context.updateView({}, blockId);
+    const { state, transactions } = editorView.state.applyTransaction(tr);
+    editorView.updateState(state);
+    context.updateView({}, translationBlockId);
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;
@@ -81,7 +74,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', blockId));
+        view.dispatch(outerTr.setMeta('outsideView', translationBlockId));
     }
   };
 
@@ -92,4 +85,4 @@ const ContainerEditor = ({ node, view, getPos }) => {
   );
 };
 
-export default ContainerEditor;
+export default EditorComponent;
