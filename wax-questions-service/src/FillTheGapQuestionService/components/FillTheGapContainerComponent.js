@@ -5,9 +5,9 @@ import {
   DocumentHelpers,
   Icon,
 } from 'wax-prosemirror-core';
-import { th } from '@pubsweet/ui-toolkit';
-
 import styled from 'styled-components';
+import { th } from '../../helpers';
+
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 

@@ -8,7 +8,7 @@ import {
   useOnClickOutside,
   MenuButton,
 } from 'wax-prosemirror-core';
-import { grid, override } from '@pubsweet/ui-toolkit';
+import { grid, override } from '../helpers';
 import InsertTableTool from './InsertTableTool';
 
 const Wrapper = styled.div`

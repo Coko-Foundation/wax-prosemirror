@@ -9,10 +9,10 @@ import React, {
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { grid, override } from '@pubsweet/ui-toolkit';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
+import { grid, override } from '../../helpers';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
-import epigraphPoetry from '../../TrackChangeService/schema/trackChangesNodes/epigraphPoetryTrackNode';
+// import epigraphPoetry from '../../TrackChangeService/schema/trackChangesNodes/epigraphPoetryTrackNode';
 
 const Wrapper = styled.div`
   font-size: 0;

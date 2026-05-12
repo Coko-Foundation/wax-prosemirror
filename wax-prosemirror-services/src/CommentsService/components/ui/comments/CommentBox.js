@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { th, override } from '@pubsweet/ui-toolkit';
+import { th, override } from '../../../../helpers';
 import CommentItemList from './CommentItemList';
 import CommentReply from './CommentReply';
 
@@ -33,7 +35,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: ${th('fontInterface')};
 
-  ${props => !props.active && inactive}
+  ${props => !props.$active && inactive}
 
   ${override('Wax.CommentWrapper')}
 `;
@@ -59,13 +61,13 @@ const Resolve = styled.button`
     border: none;
   }
 
-  ${props => props.isReadOnlyResolve && inactiveButton}
+  ${props => props.$isReadOnlyResolve && inactiveButton}
 
   ${override('Wax.CommentResolve')}
 `;
 
 const StyledReply = styled(CommentReply)`
-  border-top: ${props => !props.isNewComment && `3px solid #E1EBFF`};
+  border-top: ${props => !props.$isNewComment && `3px solid #E1EBFF`};
 
   ${override('Wax.CommentReplyWrapper')}
 `;
@@ -97,11 +99,11 @@ const CommentBox = props => {
   if (!active && (!commentData || commentData.length === 0)) return null;
   const { t, i18n } = useTranslation();
   return (
-    <Wrapper active={active} className={className} onClick={onClickWrapper}>
+    <Wrapper $active={active} className={className} onClick={onClickWrapper}>
       {active && commentData.length > 0 && (
         <Head>
           <Resolve
-            isReadOnlyResolve={isReadOnlyResolve}
+            $isReadOnlyResolve={isReadOnlyResolve}
             onClick={e => {
               if (!isReadOnlyResolve) return onClickResolve(e, commentId);
               return false;
@@ -121,7 +123,7 @@ const CommentBox = props => {
       />
       {active && (
         <StyledReply
-          isNewComment={commentData.length === 0}
+          $isNewComment={commentData.length === 0}
           isReadOnlyPost={isReadOnlyPost}
           onClickPost={onClickPost}
           onTextAreaBlur={onTextAreaBlur}

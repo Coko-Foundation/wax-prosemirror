@@ -45,7 +45,7 @@ const EditorWrapper = styled.span`
 const StudentAnswer = styled.span`
   border-bottom: 1px solid black;
   margin-right: 5px;
-  color: ${props => (props.isCorrect ? ' #008000' : 'red')};
+  color: ${props => (props.$isCorrect ? ' #008000' : 'red')};
 `;
 
 const CorrectAnswers = styled.span`
@@ -191,7 +191,9 @@ const EditorComponent = ({ node, view, getPos }) => {
     )) ||
     (showFeedBack && !testMode && (
       <>
-        <StudentAnswer isCorrect={isCorrect}>{node.attrs.answer}</StudentAnswer>
+        <StudentAnswer $isCorrect={isCorrect}>
+          {node.attrs.answer}
+        </StudentAnswer>
         <CorrectAnswers>{`(Accepted Answers : ${node.textContent.replaceAll(
           ';',
           ' -',

@@ -2,13 +2,13 @@ import React, { useMemo, useState, useRef, useContext } from 'react';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import {
   WaxContext,
   useOnClickOutside,
   MenuButton,
 } from 'wax-prosemirror-core';
+import { grid, override } from '../../helpers';
 
 const Wrapper = styled.div`
   font-size: 0;

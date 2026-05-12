@@ -23,9 +23,9 @@ const DropDownButton = styled.button`
   background: #fff;
   border: 1px solid rgb(204, 204, 204);
   color: #000;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
   display: inline-flex;
-  opacity: ${props => (props.disabled ? `0.4` : `1`)};
+  opacity: ${props => (props.$disabled ? `0.4` : `1`)};
   padding: 8px 4px 4px 4px;
   position: relative;
   width: 165px;
@@ -40,7 +40,7 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  visibility: ${props => (props.$isOpen ? 'visible' : 'hidden')};
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ const StyledIcon = styled(Icon)`
   margin-left: auto;
 `;
 
-const DropComponent = ({ getPos, node, uniqueId }) => {
+const DropComponent = ({ node, uniqueId }) => {
   const [selectedOption, setSelectedOption] = useState(undefined);
 
   const itemRefs = useRef([]);
@@ -164,10 +164,10 @@ const DropComponent = ({ getPos, node, uniqueId }) => {
     return (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
+          $disabled={isDisabled}
           aria-controls={uniqueId}
           aria-expanded={isOpen}
           aria-haspopup
-          disabled={isDisabled}
           onKeyDown={e => {
             if (e.keyCode === 40) {
               if (!itemRefs.current[0].current) return;
@@ -190,9 +190,9 @@ const DropComponent = ({ getPos, node, uniqueId }) => {
           <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
+          $isOpen={isOpen}
           aria-label="Choose an option"
           id={uniqueId}
-          isOpen={isOpen}
           role="listbox"
         >
           {node.attrs.options.map((option, index) => {

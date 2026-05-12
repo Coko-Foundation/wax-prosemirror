@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { grid } from '@pubsweet/ui-toolkit';
 import styled from 'styled-components';
+import { grid } from '../../helpers';
 
 import NoteNumber from './NoteNumber';
 

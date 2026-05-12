@@ -54,7 +54,7 @@ const CorrectAnswer = styled.span`
 
 const Answer = styled.span`
   span {
-    color: ${props => (props.isCorrect ? '#008000' : '#FF3030')};
+    color: ${props => (props.$isCorrect ? '#008000' : '#FF3030')};
   }
 `;
 
@@ -163,7 +163,7 @@ export default ({ node, view, getPos }) => {
             <CorrectAnswer>
               Correct : &nbsp;{correct && <span>{correct.label} </span>}
             </CorrectAnswer>
-            <Answer isCorrect={isCorrect}>
+            <Answer $isCorrect={isCorrect}>
               Answer : &nbsp;
               {answer && <span>{answer.label} </span>}
             </Answer>

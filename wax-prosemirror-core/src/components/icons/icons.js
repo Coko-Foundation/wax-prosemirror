@@ -5,9 +5,10 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { th } from '@pubsweet/ui-toolkit';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
+
+import { th } from '../../helpers';
 
 const Svg = styled.svg.attrs(() => ({
   version: '1.1',

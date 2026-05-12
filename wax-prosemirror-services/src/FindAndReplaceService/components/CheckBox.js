@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { th } from '@pubsweet/ui-toolkit';
+import { th } from '../../helpers';
 
 const CheckBoxContainer = styled.div`
   display: flex;
@@ -60,10 +60,6 @@ const CheckboxCustom = styled.span`
   top: 0px;
   transition: all 0.3s ease-out;
   width: 20px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
 
   &:after {
     border: solid ${th('colorPrimary')};
@@ -76,14 +72,8 @@ const CheckboxCustom = styled.span`
     position: absolute;
     top: 12px;
     width: 0px;
-    -webkit-transform: rotate(0deg) scale(0);
-    -ms-transform: rotate(0deg) scale(0);
     transform: rotate(0deg) scale(0);
     transition: all 0.3s ease-out;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
   }
 `;
 const CheckboxTitle = styled.div`

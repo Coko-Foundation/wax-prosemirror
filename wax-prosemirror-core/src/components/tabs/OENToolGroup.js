@@ -40,7 +40,7 @@ const StyledButton = styled(MenuButton)`
   padding-left: 25px;
   position: relative;
 
-  ${props => props.active && activeStyles}
+  ${props => props.$active && activeStyles}
 `;
 
 const OENToolGroup = ({ item }) => {
@@ -73,15 +73,16 @@ const OENToolGroup = ({ item }) => {
                 <OENToolWrapper key={uuidv4()}>
                   <Box key={uuidv4()} />
                   <StyledButton
-                    active={containersActive[tool.className] || false}
+                    $active={containersActive[tool.className] || false}
                     disabled={isDisabled}
                     key={uuidv4()}
                     label={tool.displayName}
+                    /* eslint-disable-next-line consistent-return */
                     onMouseDown={() => {
                       const { from, to } = main.state.selection;
                       let isInOenContainer = false;
 
-                      main.state.doc.nodesBetween(from, to, (node, pos) => {
+                      main.state.doc.nodesBetween(from, to, node => {
                         if (
                           node.type.name === 'oen_container' ||
                           node.type.name === 'oen_aside'

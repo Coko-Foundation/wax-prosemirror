@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { th } from '@pubsweet/ui-toolkit';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { th } from '../../helpers';
 import Icon from '../icons/Icon';
 import CustomTagBlockComponent from './CustomTagBlockComponent';
 import OENToolGroup from './OENToolGroup';

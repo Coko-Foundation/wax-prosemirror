@@ -12,7 +12,7 @@ const activeStyles = css`
 `;
 
 const StyledButton = styled(MenuButton)`
-  ${props => props.active && activeStyles}
+  ${props => props.$active && activeStyles}
 `;
 
 const Input = styled.input`
@@ -146,7 +146,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         <TagBoxWrapper key={uuidv4()}>
           <Box key={uuidv4()} />
           <StyledButton
-            active={tagStatus[blockTag.label]}
+            $active={tagStatus[blockTag.label]}
             disabled={isDisabled}
             key={uuidv4()}
             label={blockTag.label}

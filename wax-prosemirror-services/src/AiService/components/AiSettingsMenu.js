@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { th } from '@pubsweet/ui-toolkit';
 import { icons } from 'wax-prosemirror-core';
 import { isBoolean, keys } from 'lodash';
+import { th } from '../../helpers';
 import SwitchComponent from './Switch';
 
 // #region STYLED COMPONENTS ---------------------------------------------

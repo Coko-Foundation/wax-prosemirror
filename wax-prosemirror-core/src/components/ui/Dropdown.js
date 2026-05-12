@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { grid, override } from '@pubsweet/ui-toolkit';
+import { grid, override } from '../../helpers';
 import MenuButton from './MenuButton';
 
 // font size 0 reason: https://stackoverflow.com/a/19212391

@@ -27,7 +27,7 @@ const NormalButton = styled.button`
 
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
-    props.isActive &&
+    props.$isActive &&
     css`
       background-color: gray;
       color: white;
@@ -39,7 +39,7 @@ const ReadOnlyButton = styled.button`
 
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
-    props.isActive &&
+    props.$isActive &&
     css`
       background-color: gray;
       color: white;
@@ -51,7 +51,7 @@ const TestModeButton = styled.button`
 
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
-    props.isActive &&
+    props.$isActive &&
     css`
       background-color: gray;
       color: white;
@@ -61,7 +61,7 @@ const TestModeButton = styled.button`
 const SubmitButton = styled.button`
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
-    props.isActive &&
+    props.$isActive &&
     css`
       background-color: gray;
       color: white;
@@ -145,19 +145,19 @@ const Hhmi = () => {
   return (
     <>
       <ButtonContainer>
-        <NormalButton isActive={!readOnly} onClick={normalQuestions}>
+        <NormalButton $isActive={!readOnly} onClick={normalQuestions}>
           Normal
         </NormalButton>
         <ReadOnlyButton
-          isActive={readOnly && !submitted && !testMode}
+          $isActive={readOnly && !submitted && !testMode}
           onClick={readOnlyQuestions}
         >
           Read Only
         </ReadOnlyButton>
-        <TestModeButton isActive={testMode} onClick={testModeQuestions}>
+        <TestModeButton $isActive={testMode} onClick={testModeQuestions}>
           Test Mode
         </TestModeButton>
-        <SubmitButton isActive={submitted} onClick={submitQuestions}>
+        <SubmitButton $isActive={submitted} onClick={submitQuestions}>
           Submit
         </SubmitButton>
       </ButtonContainer>

@@ -34,7 +34,7 @@ const ResultContainer = styled.div`
 `;
 
 const FinalResult = styled.span`
-  color: ${props => (props.isCorrect ? ' #008000' : 'red')};
+  color: ${props => (props.$isCorrect ? ' #008000' : 'red')};
   font-weight: 999;
 `;
 
@@ -162,7 +162,7 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
           <span>{`(Accepted Answers : ${precise.replaceAll(';', '; ')})`}</span>
           <span>
             Answer:{' '}
-            <FinalResult isCorrect={isCorrect}>
+            <FinalResult $isCorrect={isCorrect}>
               {preciseStudent} {isCorrect && <StyledIconCorrect name="done" />}
               {!isCorrect && <StyledIconWrong name="close" />}
             </FinalResult>

@@ -17,12 +17,12 @@ const Wrapper = styled.span`
 
 const DropdownStyled = styled(Dropdown)`
   display: inline-flex;
-  opacity: ${props => (props.select ? 1 : 0.4)};
+  opacity: ${props => (props.$select ? 1 : 0.4)};
 
   .Dropdown-control {
     border: none;
-    cursor: ${props => (props.select ? 'pointer' : 'not-allowed')};
-    pointer-events: ${props => (props.select ? 'default' : 'none')};
+    cursor: ${props => (props.$select ? 'pointer' : 'not-allowed')};
+    pointer-events: ${props => (props.$select ? 'default' : 'none')};
 
     &:hover {
       box-shadow: none;
@@ -126,11 +126,11 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
       <Wrapper>
         <DropdownStyled
           // eslint-disable-next-line no-unused-vars
-          onChange={option => {
+          $select={isDisabled}
+          onChange={() => {
             return enableDisableTrackChanges();
           }}
           options={dropDownOptions}
-          select={isDisabled}
           value={selectedOption()}
         />
       </Wrapper>

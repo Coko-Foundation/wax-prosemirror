@@ -71,7 +71,7 @@ const ProjectButton = styled.button`
   margin-right: 20px;
   background: #fff;
   padding: 8px 15px 8px 15px;
-  ${props => props.isActive && activeStyles}
+  ${props => props.$isActive && activeStyles}
 `;
 
 const Editors = () => {
@@ -103,25 +103,25 @@ const Editors = () => {
           <span>Select Project:</span>
           {/* <button onMouseDown={onClick}>hhh</button> */}
           <ProjectButton
-            isActive={project === 'hhmi'}
+            $isActive={project === 'hhmi'}
             onClick={() => setProject('hhmi')}
           >
             Widget Example
           </ProjectButton>
           <ProjectButton
-            isActive={project === 'editoria'}
+            $isActive={project === 'editoria'}
             onClick={() => setProject('editoria')}
           >
             Ketida
           </ProjectButton>
           <ProjectButton
-            isActive={project === 'oen'}
+            $isActive={project === 'oen'}
             onClick={() => setProject('oen')}
           >
             OEN
           </ProjectButton>
           <ProjectButton
-            isActive={project === 'ncbi'}
+            $isActive={project === 'ncbi'}
             onClick={() => setProject('ncbi')}
           >
             Basic Editors

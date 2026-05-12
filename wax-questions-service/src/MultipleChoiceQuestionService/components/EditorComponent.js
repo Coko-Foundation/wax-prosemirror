@@ -35,7 +35,7 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
-  padding: ${props => (props.usePadding ? '0px 20px 10px 20px' : `0px`)};
+  padding: ${props => (props.$usePadding ? '0px 20px 10px 20px' : `0px`)};
   width: 100%;
 
   .ProseMirror {
@@ -278,7 +278,7 @@ const QuestionEditorComponent = ({
         </DeleteArea>
       )}
       <EditorWrapper
-        usePadding={showDelete && QuestionType !== 'EssayQuestion'}
+        $usePadding={showDelete && QuestionType !== 'EssayQuestion'}
       >
         <div ref={editorRef} />
         <WaxOverlays activeViewId={questionId} />

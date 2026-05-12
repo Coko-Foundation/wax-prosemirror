@@ -3,9 +3,9 @@ import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { useOnClickOutside, MenuButton } from 'wax-prosemirror-core';
+import { grid } from '../../../helpers';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -13,19 +13,19 @@ const Wrapper = styled.div`
   z-index: 2;
 
   button {
-    background: ${props => (props.active ? `#535E76` : '#fff')};
+    background: ${props => (props.$active ? `#535E76` : '#fff')};
     border: ${props =>
-      props.active ? `1px solid #535E76` : `1px solid #D8DAE0`};
+      props.$active ? `1px solid #535E76` : `1px solid #D8DAE0`};
 
     &:hover {
-      background: ${props => (props.active ? `#535E76` : '#D8DAE0')};
+      background: ${props => (props.$active ? `#535E76` : '#D8DAE0')};
     }
     box-shadow: 0px -2px 6px 1px rgba(204, 204, 204, 0.41);
   }
 
   &:before {
     border-bottom: ${props =>
-      props.active ? `8px solid #535E76` : `8px solid #D8DAE0`};
+      props.$active ? `8px solid #535E76` : `8px solid #D8DAE0`};
 
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
@@ -172,7 +172,7 @@ const EditorShortCutsTool = ({ view: { state }, item }) => {
 
   const MenuButtonComponent = useMemo(
     () => (
-      <Wrapper active={isOpen} ref={ref}>
+      <Wrapper $active={isOpen} ref={ref}>
         <MenuButton
           active={isOpen}
           disabled={false}

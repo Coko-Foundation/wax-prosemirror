@@ -25,7 +25,7 @@ const Answer = styled.span`
   margin-right: 10px;
 
   span {
-    color: ${props => (props.isCorrect ? ' #008000' : 'red')};
+    color: ${props => (props.$isCorrect ? ' #008000' : 'red')};
   }
 `;
 
@@ -65,7 +65,7 @@ const YesNoSwitch = ({
           <span>{correct}</span>
         </Correct>
 
-        <Answer isCorrect={isCorrect}>
+        <Answer $isCorrect={isCorrect}>
           Answer: <span>{answer}</span>
         </Answer>
         {isCorrect && <StyledIconCorrect name="done" />}

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Switch from 'rc-switch';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid } from '../../helpers';
 
 const Wrapper = styled.span`
   button {
@@ -29,13 +29,13 @@ const Wrapper = styled.span`
 
 const Label = styled.label`
   ${props =>
-    props.labelPosition === 'left' &&
+    props.$labelPosition === 'left' &&
     css`
       margin-right: ${grid(2)};
     `}
 
   ${props =>
-    props.labelPosition === 'right' &&
+    props.$labelPosition === 'right' &&
     css`
       margin-left: ${grid(2)};
     `}
@@ -48,7 +48,7 @@ const SwitchComponent = props => {
   return (
     <Wrapper className={className}>
       {label && labelPosition === 'left' && (
-        <Label labelPosition={labelPosition} onClick={onChange}>
+        <Label $labelPosition={labelPosition} onClick={onChange}>
           {label}
         </Label>
       )}
@@ -60,7 +60,7 @@ const SwitchComponent = props => {
       />
 
       {label && labelPosition === 'right' && (
-        <Label labelPosition={labelPosition} onClick={onChange}>
+        <Label $labelPosition={labelPosition} onClick={onChange}>
           {label}
         </Label>
       )}

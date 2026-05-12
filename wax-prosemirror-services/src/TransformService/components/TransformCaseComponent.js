@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuid } from 'uuid';
 import {
   WaxContext,
@@ -10,6 +9,7 @@ import {
   MenuButton,
   Icon,
 } from 'wax-prosemirror-core';
+import { grid, override } from '../../helpers';
 
 const Wrapper = styled.div`
   font-size: 0;

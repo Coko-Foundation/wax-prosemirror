@@ -5,7 +5,7 @@ import EditorComponent from '../../MultipleChoiceQuestionService/components/Edit
 
 const EditorWrapper = styled.div`
   display: ${props =>
-    props.testMode || props.showFeedBack ? 'block' : 'none'};
+    props.$testMode || props.$showFeedBack ? 'block' : 'none'};
 `;
 
 export default ({ node, view, getPos }) => {
@@ -18,7 +18,7 @@ export default ({ node, view, getPos }) => {
   const { testMode, showFeedBack } = customProps;
 
   return (
-    <EditorWrapper showFeedBack={showFeedBack} testMode={testMode}>
+    <EditorWrapper $showFeedBack={showFeedBack} $testMode={testMode}>
       <EditorComponent
         forceEditable={testMode}
         getPos={getPos}

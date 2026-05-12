@@ -18,19 +18,19 @@ const StyledIconActionContainer = styled.span`
   height: 24px;
   width: 24px;
   cursor: pointer;
-  ${props => props.isActive && activeStylesContainer}
+  ${props => props.$isActive && activeStylesContainer}
 `;
 
 const StyledIconAction = styled(Icon)`
-  ${props => props.isActive && activeStylesSvg}
+  ${props => props.$isActive && activeStylesSvg}
 `;
 
 const AnswerContainer = styled.div`
   display: inline-block;
   border-bottom: ${props =>
-    props.isCorrect ? '1px solid #008000;' : '1px solid #FF3030'};
+    props.$isCorrect ? '1px solid #008000;' : '1px solid #FF3030'};
   border-top: ${props =>
-    props.isCorrect ? '1px solid #008000;' : '1px solid #FF3030'};
+    props.$isCorrect ? '1px solid #008000;' : '1px solid #FF3030'};
   border-radius: 192px;
   padding: 2px 4px 2px 4px;
 `;
@@ -66,8 +66,8 @@ export default ({ node, getPos }) => {
 
   if (!readOnly) {
     return (
-      <StyledIconActionContainer isActive={isActive}>
-        <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
+      <StyledIconActionContainer $isActive={isActive}>
+        <StyledIconAction $isActive={isActive} name="mulitpleDropDown" />
       </StyledIconActionContainer>
     );
   }
@@ -84,7 +84,7 @@ export default ({ node, getPos }) => {
     const isCorrect = node.attrs.correct === node.attrs.answer;
 
     return (
-      <AnswerContainer isCorrect={isCorrect}>
+      <AnswerContainer $isCorrect={isCorrect}>
         Correct:
         {correct && <CorrectAnswer> {correct.label} | &nbsp;</CorrectAnswer>}
         Answer: {answer && <Answer> {answer.label}</Answer>}

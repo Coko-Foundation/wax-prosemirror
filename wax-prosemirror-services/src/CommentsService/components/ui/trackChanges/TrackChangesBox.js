@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
-  ${props => props.active && activeBorder}
+  ${props => props.$active && activeBorder}
   padding: 8px 16px;
   transition: border 0.1s ease-in;
 
@@ -163,7 +163,7 @@ const TrackChangesBox = props => {
   }
 
   return (
-    <Wrapper active={active} className={className} onClick={onClickTrackBox}>
+    <Wrapper $active={active} className={className} onClick={onClickTrackBox}>
       <HeadWrapper>
         <Info>
           <Name>{username}</Name>

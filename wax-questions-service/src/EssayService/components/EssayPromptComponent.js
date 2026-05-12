@@ -4,7 +4,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
 
 const EditorWrapper = styled.div`
-  display: ${props => (props.testMode ? 'none' : 'block')};
+  display: ${props => (props.$testMode ? 'none' : 'block')};
 `;
 
 export default ({ node, view, getPos }) => {
@@ -17,7 +17,7 @@ export default ({ node, view, getPos }) => {
   const { testMode } = customProps;
 
   return (
-    <EditorWrapper testMode={testMode}>
+    <EditorWrapper $testMode={testMode}>
       <EditorComponent
         getPos={getPos}
         node={node}

@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types, array-callback-return */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { each, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { grid } from '@pubsweet/ui-toolkit';
 import {
   WaxContext,
   ApplicationContext,
@@ -11,6 +10,7 @@ import {
   MenuButton,
   Commands,
 } from 'wax-prosemirror-core';
+import { grid } from '../../helpers';
 
 const Wrapper = styled.div`
   background: #fff;

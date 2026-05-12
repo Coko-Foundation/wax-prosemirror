@@ -23,8 +23,8 @@ const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${props => (props.disabled ? `0.4` : `1`)};
+  cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${props => (props.$disabled ? `0.4` : `1`)};
   display: flex;
   position: relative;
   width: 160px;
@@ -36,7 +36,7 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  visibility: ${props => (props.$isOpen ? 'visible' : 'hidden')};
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -163,12 +163,12 @@ const TestModeDropDownComponent = ({ getPos, node, view, uniqueId }) => {
       });
     }
     return (
-      <Wrapper disabled={isDisabled} ref={wrapperRef}>
+      <Wrapper $disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
+          $disabled={isDisabled}
           aria-controls={uniqueId}
           aria-expanded={isOpen}
           aria-haspopup
-          disabled={isDisabled}
           onKeyDown={e => {
             if (e.keyCode === 40) {
               if (!itemRefs.current[0].current) return;
@@ -191,9 +191,9 @@ const TestModeDropDownComponent = ({ getPos, node, view, uniqueId }) => {
           <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
+          $isOpen={isOpen}
           aria-label="Choose an option"
           id={uniqueId}
-          isOpen={isOpen}
           role="listbox"
         >
           {node.attrs.options.map((option, index) => {

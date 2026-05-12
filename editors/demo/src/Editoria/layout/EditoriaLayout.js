@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import {
@@ -8,7 +8,7 @@ import {
   DocumentHelpers,
   WaxView,
 } from 'wax-prosemirror-core';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th } from '../../helpers';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 
@@ -251,7 +251,7 @@ const EditoriaLayout = props => {
   useEffect(() => {
     const areNotes = notes && !!notes.length && notes.length > 0;
     setHasNotes(areNotes);
-  }, [notes?.length]);
+  }, [notes]);
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">

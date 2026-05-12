@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
 import { MenuButton } from 'wax-prosemirror-core';
+import { grid } from '../../helpers';
 import TrackChangeOptionsComponent from './TrackChangeOptionsComponent';
 
 const Wrapper = styled.div`
@@ -18,7 +18,7 @@ const DropWrapper = styled.div`
   top: 32px;
 `;
 
-const TrackChangeOptionsTool = ({ view = {}, item, groups }) => {
+const TrackChangeOptionsTool = ({ groups }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showHide, setShowHide] = useState(true);
 

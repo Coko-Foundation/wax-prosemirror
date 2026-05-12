@@ -10,7 +10,7 @@ import {
   Icon,
 } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th } from '../../helpers';
 import CheckBox from './CheckBox';
 import helpers from './helpers';
 
@@ -187,6 +187,7 @@ const ExpandedFindAndReplaceComponent = ({
     setCounterSearches(counter);
   }, [debouncedSearchTerm, matchCaseSearch, JSON.stringify(allStates)]);
 
+  /* eslint-disable-next-line consistent-return */
   const setCounterSearches = counter => {
     if (counter === 0) return setCounterText(`0 ${of} 0`);
     setCounterText(`0 ${of} ${counter}`);

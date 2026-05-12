@@ -11,7 +11,7 @@ const activeStyles = css`
 `;
 
 const StyledButton = styled(MenuButton)`
-  ${props => props.active && activeStyles}
+  ${props => props.$active && activeStyles}
 `;
 
 const LeftSideButton = ({ view = {}, item }) => {
@@ -47,7 +47,7 @@ const LeftSideButton = ({ view = {}, item }) => {
   const LeftSideButtonComponent = useMemo(
     () => (
       <StyledButton
-        active={isActive || false}
+        $active={isActive || false}
         disabled={isDisabled}
         iconName={icon}
         label={
