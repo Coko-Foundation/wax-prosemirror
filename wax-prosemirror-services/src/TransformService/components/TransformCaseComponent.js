@@ -26,12 +26,14 @@ const DropWrapper = styled.div`
 
   ${override('Wax.TransformToolWrapper')}
 `;
+
 const TextTransformCaseComponent = styled.div`
   background: white;
   border: 1px solid gray;
   display: flex;
   flex-direction: column;
 `;
+
 const Transformer = styled.div`
   cursor: pointer;
   display: inline-grid;
@@ -145,12 +147,12 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
         {isOpen && (
           <DropWrapper>
             <TextTransformCaseComponent
-              close={() => {
-                setIsOpen(false);
-              }}
-              item={item}
+              // close={() => {
+              //   setIsOpen(false);
+              // }}
+              // item={item}
               key={uuid()}
-              view={state}
+              // view={state}
             >
               {renderList()}
             </TextTransformCaseComponent>

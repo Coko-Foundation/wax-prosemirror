@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState, forwardRef } from 'react';
@@ -36,7 +37,13 @@ const createConfigWithHash = config => {
 };
 
 const Wax = forwardRef((props, innerViewRef) => {
-  const { config, layout, onChange, targetFormat } = props;
+  const {
+    config = { SchemaService: DefaultSchema, services: [] },
+    layout,
+    onChange,
+    targetFormat,
+    customValues = {},
+  } = props;
 
   const [application, setApplication] = useState();
   const [WaxLayout, setWaxLayout] = useState(null);
@@ -65,6 +72,7 @@ const Wax = forwardRef((props, innerViewRef) => {
           <WaxLayout
             {...props}
             app={application}
+            customValues={customValues}
             innerViewRef={innerViewRef}
             onChange={finalOnChange || (() => true)}
             serializer={serializer}
@@ -78,10 +86,5 @@ const Wax = forwardRef((props, innerViewRef) => {
     </ApplicationProvider>
   );
 });
-
-Wax.defaultProps = {
-  config: { SchemaService: DefaultSchema, services: [] },
-  customValues: {},
-};
 
 export default Wax;

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -99,7 +100,7 @@ const MenuButton = props => {
     >
       {iconName && <Component className={className} />}
 
-      {label && <Label hasIcon={!!iconName}>{label}</Label>}
+      {label && <Label $hasIcon={!!iconName}>{label}</Label>}
     </Wrapper>
   );
 };
@@ -110,12 +111,6 @@ MenuButton.propTypes = {
   iconName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   label: PropTypes.string,
   title: PropTypes.string,
-};
-
-MenuButton.defaultProps = {
-  iconName: null,
-  label: null,
-  title: null,
 };
 
 export default MenuButton;

@@ -25,12 +25,14 @@ const DropWrapper = styled.div`
 
   ${override('Wax.HighlightToolWrapper')}
 `;
+
 const TextHighlightComponent = styled.div`
   background: white;
   border: 1px solid gray;
   display: flex;
   flex-direction: column;
 `;
+
 const Highlighter = styled.div`
   border: 1px solid gray;
   cursor: pointer;
@@ -133,12 +135,12 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
         {isOpen && (
           <DropWrapper>
             <TextHighlightComponent
-              close={() => {
-                setIsOpen(false);
-              }}
+              // close={() => {
+              //   setIsOpen(false);
+              // }}
               item={item}
-              key={uuidv4()}
-              view={(dispatch, state)}
+              // key={uuidv4()}
+              // view={(dispatch, state)}
             >
               {renderList()}
             </TextHighlightComponent>

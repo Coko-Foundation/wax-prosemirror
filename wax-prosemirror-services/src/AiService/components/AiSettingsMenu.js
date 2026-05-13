@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -98,7 +99,12 @@ const OptionButton = styled.button.attrs({ type: 'button' })`
 `;
 // #endregion STYLED COMPONENTS ---------------------------------------------
 
-const PromptOptions = ({ aiService, optionsState, setOption, options }) => {
+const PromptOptions = ({
+  aiService = {},
+  optionsState = {},
+  setOption = () => {},
+  options = [],
+}) => {
   if (!options) return null;
   const onAiService = ({ key }) => keys(aiService).includes(key);
   const existentOptions = options.filter(onAiService);
@@ -140,12 +146,6 @@ PromptOptions.propTypes = {
       stateText: PropTypes.func, // recieves the option state as the only arg, string expected
     }),
   ),
-};
-PromptOptions.defaultProps = {
-  aiService: {},
-  optionsState: {},
-  setOption: () => {},
-  options: [],
 };
 
 export default PromptOptions;

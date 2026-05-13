@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -48,7 +49,14 @@ const Label = styled.label`
 `;
 
 const SwitchComponent = props => {
-  const { className, label, labelPosition, onChange, ...rest } = props;
+  const {
+    className,
+    label,
+    labelPosition = 'right',
+    onChange = () => true,
+    text = '',
+    ...rest
+  } = props;
 
   return (
     <Wrapper className={className}>
@@ -58,7 +66,7 @@ const SwitchComponent = props => {
         </Label>
       )}
 
-      <Switch onChange={onChange} {...rest} />
+      <Switch onChange={onChange} text={text} {...rest} />
 
       {label && labelPosition === 'right' && (
         <Label $labelPosition={labelPosition} onClick={onChange}>
@@ -74,13 +82,6 @@ SwitchComponent.propTypes = {
   labelPosition: PropTypes.string,
   onChange: PropTypes.func,
   text: PropTypes.string,
-};
-
-SwitchComponent.defaultProps = {
-  label: null,
-  labelPosition: 'right',
-  onChange: () => true,
-  text: '',
 };
 
 export default SwitchComponent;

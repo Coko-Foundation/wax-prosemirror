@@ -3,47 +3,11 @@ import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import {
-  WaxContext,
-  ApplicationContext,
-  ReactDropDownStyles,
-  Icon,
-} from 'wax-prosemirror-core';
-import Dropdown from 'react-dropdown';
+import { WaxContext, ApplicationContext, Icon } from 'wax-prosemirror-core';
+import Dropdown from './Dropdown';
 
 const Wrapper = styled.span`
-  ${ReactDropDownStyles};
-`;
-
-const DropdownStyled = styled(Dropdown)`
   display: inline-flex;
-  opacity: ${props => (props.$select ? 1 : 0.4)};
-
-  .Dropdown-control {
-    border: none;
-    cursor: ${props => (props.$select ? 'pointer' : 'not-allowed')};
-    pointer-events: ${props => (props.$select ? 'default' : 'none')};
-
-    &:hover {
-      box-shadow: none;
-    }
-  }
-
-  .Dropdown-arrow {
-    right: 25px;
-    top: 14px;
-  }
-
-  .Dropdown-menu {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    width: 120%;
-
-    .Dropdown-option {
-      width: 100%;
-    }
-  }
 `;
 
 const StyledIcon = styled(Icon)`
@@ -124,12 +88,9 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
   const EditingSuggestingComponent = useMemo(
     () => (
       <Wrapper>
-        <DropdownStyled
-          // eslint-disable-next-line no-unused-vars
-          $select={isDisabled}
-          onChange={() => {
-            return enableDisableTrackChanges();
-          }}
+        <Dropdown
+          disabled={!isDisabled}
+          onChange={enableDisableTrackChanges}
           options={dropDownOptions}
           value={selectedOption()}
         />

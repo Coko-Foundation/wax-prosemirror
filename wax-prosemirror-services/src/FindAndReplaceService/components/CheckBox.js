@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -86,7 +88,7 @@ const CheckboxTitle = styled.div`
 `;
 
 const CheckBox = props => {
-  const { checked, name, label, onChange } = props;
+  const { checked = false, name, label, onChange } = props;
   return (
     <CheckBoxContainer>
       <CheckBoxLabel>
@@ -109,11 +111,6 @@ CheckBox.propTypes = {
   label: PropTypes.string,
   checked: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-};
-
-CheckBox.defaultProps = {
-  checked: false,
-  label: null,
 };
 
 export default CheckBox;

@@ -1,4 +1,7 @@
+/* eslint-disable react/require-default-props */
+
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+
 import {
   WaxContext,
   ApplicationContext,
@@ -6,7 +9,7 @@ import {
 } from 'wax-prosemirror-core';
 import PropTypes from 'prop-types';
 
-const ToggleAiComponent = ({ item }) => {
+const ToggleAiComponent = ({ item = { icon: '', title: '' } }) => {
   const [checked, setChecked] = useState(false);
   const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
@@ -63,13 +66,6 @@ ToggleAiComponent.propTypes = {
     icon: PropTypes.string,
     title: PropTypes.string,
   }),
-};
-
-ToggleAiComponent.defaultProps = {
-  item: {
-    icon: '',
-    title: '',
-  },
 };
 
 export default ToggleAiComponent;

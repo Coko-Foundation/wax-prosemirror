@@ -40,7 +40,7 @@ const StyledButton = styled(MenuButton)`
   padding-left: 25px;
   position: relative;
 
-  ${props => props.$active && activeStyles}
+  ${props => props.active && activeStyles}
 `;
 
 const OENToolGroup = ({ item }) => {
@@ -73,7 +73,7 @@ const OENToolGroup = ({ item }) => {
                 <OENToolWrapper key={uuidv4()}>
                   <Box key={uuidv4()} />
                   <StyledButton
-                    $active={containersActive[tool.className] || false}
+                    active={containersActive[tool.className] || false}
                     disabled={isDisabled}
                     key={uuidv4()}
                     label={tool.displayName}

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -22,7 +23,14 @@ const DropWrapper = styled.div`
 `;
 
 const Dropdown = props => {
-  const { className, disabled, dropComponent, iconName, label, title } = props;
+  const {
+    className,
+    disabled = false,
+    dropComponent,
+    iconName,
+    label,
+    title,
+  } = props;
   const [isOpen, setIsOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
@@ -59,13 +67,6 @@ Dropdown.propTypes = {
   iconName: PropTypes.string,
   label: PropTypes.string,
   title: PropTypes.string,
-};
-
-Dropdown.defaultProps = {
-  disabled: false,
-  iconName: null,
-  label: null,
-  title: null,
 };
 
 export default Dropdown;

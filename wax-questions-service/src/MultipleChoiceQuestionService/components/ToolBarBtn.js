@@ -8,7 +8,7 @@ const activeStyles = css`
 `;
 
 const StyledButton = styled(MenuButton)`
-  ${props => props.$active && activeStyles}
+  ${props => props.active && activeStyles}
 `;
 
 const ToolBarBtn = ({ view = {}, item }) => {
@@ -31,7 +31,7 @@ const ToolBarBtn = ({ view = {}, item }) => {
   const ToolBarBtnComponent = useMemo(
     () => (
       <StyledButton
-        $active={false}
+        active={false}
         disabled={isDisabled}
         iconName={icon}
         label={label}

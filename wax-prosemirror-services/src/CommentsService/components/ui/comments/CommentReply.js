@@ -223,6 +223,4 @@ CommentReply.propTypes = {
   showTitle: PropTypes.bool.isRequired,
 };
 
-CommentReply.defaultProps = {};
-
 export default CommentReply;

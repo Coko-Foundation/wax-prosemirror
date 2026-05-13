@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react/require-default-props */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -74,10 +75,10 @@ const StyledReply = styled(CommentReply)`
 
 const CommentBox = props => {
   const {
-    active,
+    active = false,
     className,
     commentId,
-    commentData,
+    commentData = [],
     isReadOnlyResolve,
     isReadOnlyPost,
     onClickBox,
@@ -86,7 +87,7 @@ const CommentBox = props => {
     onTextAreaBlur,
     title,
     showTitle,
-    users,
+    users = [],
     usersMentionList,
   } = props;
 
@@ -172,13 +173,6 @@ CommentBox.propTypes = {
       currentUser: PropTypes.bool,
     }),
   ),
-};
-
-CommentBox.defaultProps = {
-  active: false,
-  commentData: [],
-  title: null,
-  users: [],
 };
 
 export default CommentBox;
