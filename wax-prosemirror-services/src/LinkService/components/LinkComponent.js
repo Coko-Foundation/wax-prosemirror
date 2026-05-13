@@ -1,8 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import { grid, th, override } from '../../helpers';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -52,12 +52,11 @@ const StyledButton = styled.button`
 
 const StyledButtonCancel = styled.button`
   margin-right: 10px;
-  background: #fff
+  background: #fff;
   cursor: pointer;
-  color:${th('colorPrimary')};
+  color: ${th('colorPrimary')};
 
-    ${override('Wax.LinkCancel')}
-
+  ${override('Wax.LinkCancel')}
 `;
 
 const LinkComponent = ({ mark }) => {

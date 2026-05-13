@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { th } from '@pubsweet/ui-toolkit';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { th } from '../../helpers';
 import Icon from '../icons/Icon';
 
 const Wrapper = styled.div`
@@ -29,8 +29,8 @@ const disabledTab = css`
 const Tab = styled.div`
   cursor: pointer;
   margin: 0 4px 4px 4px;
-  ${props => props.active && activeTab}
-  ${props => props.disabled && disabledTab}
+  ${props => props.$active && activeTab}
+  ${props => props.$disabled && disabledTab}
 
   padding: 8px;
 
@@ -60,8 +60,8 @@ const TabsPane = props => {
       <Tabs>
         {tabList.map(tab => (
           <Tab
-            active={tabDisplay === tab.id}
-            disabled={tab.disabled}
+            $active={tabDisplay === tab.id}
+            $disabled={tab.disabled}
             key={tab.id}
             onClick={() => {
               if (!tab.disabled) setTabDisplay(tab.id);

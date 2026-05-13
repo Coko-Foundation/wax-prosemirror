@@ -12,14 +12,14 @@ import styled from 'styled-components';
 import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
+  opacity: ${props => (props.$disabled ? '0.4' : '1')};
 `;
 
 const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   position: relative;
   width: 215px;
@@ -32,7 +32,7 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  visibility: ${props => (props.$isOpen ? 'visible' : 'hidden')};
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -196,12 +196,12 @@ const DropDownComponent = ({ view, tools }) => {
 
   const MultipleDropDown = useMemo(
     () => (
-      <Wrapper disabled={isDisabled} ref={wrapperRef}>
+      <Wrapper $disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
+          $disabled={isDisabled}
           aria-controls="questions-list"
           aria-expanded={isOpen}
           aria-haspopup
-          disabled={isDisabled}
           onKeyDown={e => {
             if (e.keyCode === 40) {
               itemRefs.current[0].current.focus();
@@ -219,9 +219,9 @@ const DropDownComponent = ({ view, tools }) => {
           <span>{label}</span> <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
+          $isOpen={isOpen}
           aria-label="Choose an item type"
           id="questions-list"
-          isOpen={isOpen}
           role="menu"
         >
           {dropDownOptions.map((option, index) => {

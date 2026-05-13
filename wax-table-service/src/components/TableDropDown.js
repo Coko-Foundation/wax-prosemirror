@@ -1,4 +1,6 @@
 /* eslint react/prop-types: 0 */
+/* stylelint-disable order/properties-alphabetical-order */
+
 import React, {
   useMemo,
   useContext,
@@ -14,7 +16,7 @@ import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 import * as tablesFn from '../tableSrc';
 
 const Wrapper = styled.div`
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
+  opacity: ${props => (props.$disabled ? '0.4' : '1')};
   display: flex;
 `;
 
@@ -28,7 +30,7 @@ const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   width: 160px;
 
@@ -39,7 +41,7 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  visibility: ${props => (props.$isOpen ? 'visible' : 'hidden')};
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -255,13 +257,13 @@ const TableDropDown = ({ item }) => {
 
   const TableDropDownComponent = useMemo(
     () => (
-      <Wrapper disabled={isDisabled} ref={wrapperRef}>
+      <Wrapper $disabled={isDisabled} ref={wrapperRef}>
         <ButtonWrapper>
           <DropDownButton
+            $disabled={isDisabled}
             aria-controls="table-options"
             aria-expanded={isOpen}
             aria-haspopup
-            disabled={isDisabled}
             onKeyDown={e => {
               if (e.keyCode === 40) {
                 itemRefs.current[0].current.focus();
@@ -285,9 +287,9 @@ const TableDropDown = ({ item }) => {
           </DropDownButton>
         </ButtonWrapper>
         <DropDownMenu
+          $isOpen={isOpen}
           aria-label="Choose a table action"
           id="table-options"
-          isOpen={isOpen}
           role="menu"
         >
           {dropDownOptions.map((option, index) => {

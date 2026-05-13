@@ -1,56 +1,39 @@
 /* eslint react/prop-types: 0 */
 /* eslint react/destructuring-assignment: 0 */
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export const PortalContext = React.createContext({
   createPortal: () => {},
-  portals: {},
-  citationFormat: 'simple',
-  setCitationFormat: () => {},
+  portals: [],
 });
 
 export default props => {
-  const [citationFormat, setCitationFormat] = useState('simple');
-  
-  const [portal, setPortal] = useState({
-    createPortal: (
-      element,
-      component,
-      node,
-      view,
-      getPos,
-      decorations,
-      context,
-    ) => {
+  const [portals, setPortals] = useState([]);
+
+  const createPortal = useCallback(
+    (element, component, node, view, getPos, decorations, context) => {
       setTimeout(() => {
-        portal.portals.push({
-          id: uuidv4(),
-          element,
-          component,
-          node,
-          view,
-          getPos,
-          decorations,
-          context,
-        });
-        setPortal({
-          createPortal: portal.createPortal,
-          portals: [...portal.portals],
-        });
+        setPortals(prev => [
+          ...prev,
+          {
+            id: uuidv4(),
+            element,
+            component,
+            node,
+            view,
+            getPos,
+            decorations,
+            context,
+          },
+        ]);
       });
     },
-    portals: [],
-  });
+    [],
+  );
 
   return (
-    <PortalContext.Provider
-      value={{
-        ...portal,
-        citationFormat,
-        setCitationFormat,
-      }}
-    >
+    <PortalContext.Provider value={{ createPortal, portals }}>
       {props.children}
     </PortalContext.Provider>
   );

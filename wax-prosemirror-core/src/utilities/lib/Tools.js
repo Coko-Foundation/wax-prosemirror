@@ -14,6 +14,7 @@ class Tools {
   config = {};
   pmplugins = {};
   name = 'name';
+
   constructor(@inject('Config') config, @inject('PmPlugins') pmplugins) {
     this.config = config;
     this.pmplugins = pmplugins;
@@ -92,4 +93,5 @@ class Tools {
     this._showLabel = false;
   }
 }
+
 export default Tools;

@@ -13,7 +13,7 @@ import acceptTrackChange from './ui/trackChanges/AcceptTrackChange';
 import rejectTrackChange from './ui/trackChanges/RejectTrackChange';
 
 const ConnectedTrackChangeStyled = styled.div`
-  margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
+  margin-left: ${props => (props.$active ? `${-20}px` : `${50}px`)};
   position: absolute;
   transition: all 1.3s;
   width: 205px;
@@ -118,7 +118,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const MemorizedTrackChange = useMemo(
     () => (
       <ConnectedTrackChangeStyled
-        active={isActive}
+        $active={isActive}
         data-box={trackChangeId}
         style={styles}
       >

@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-import { th } from '@pubsweet/ui-toolkit';
+import { th } from '../../helpers';
 
 /* All styles regarding ProseMirror surface and elements */
 

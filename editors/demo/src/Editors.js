@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import i18next from 'i18next';
-import { useTranslation } from 'react-i18next';
-import { initReactI18next } from 'react-i18next';
+import { useTranslation, initReactI18next } from 'react-i18next';
 import Editoria from './Editoria/Editoria';
 import HHMI from './HHMI/HHMI';
 import NCBI from './NCBI/NCBI';
@@ -71,7 +70,7 @@ const ProjectButton = styled.button`
   margin-right: 20px;
   background: #fff;
   padding: 8px 15px 8px 15px;
-  ${props => props.isActive && activeStyles}
+  ${props => props.$isActive && activeStyles}
 `;
 
 const Editors = () => {
@@ -91,7 +90,7 @@ const Editors = () => {
       case 'oen':
         return <OEN />;
       default:
-        return <Editoria />;
+        return <HHMI />;
     }
   };
 
@@ -103,25 +102,25 @@ const Editors = () => {
           <span>Select Project:</span>
           {/* <button onMouseDown={onClick}>hhh</button> */}
           <ProjectButton
-            isActive={project === 'hhmi'}
+            $isActive={project === 'hhmi'}
             onClick={() => setProject('hhmi')}
           >
             Widget Example
           </ProjectButton>
           <ProjectButton
-            isActive={project === 'editoria'}
+            $isActive={project === 'editoria'}
             onClick={() => setProject('editoria')}
           >
             Ketida
           </ProjectButton>
           <ProjectButton
-            isActive={project === 'oen'}
+            $isActive={project === 'oen'}
             onClick={() => setProject('oen')}
           >
             OEN
           </ProjectButton>
           <ProjectButton
-            isActive={project === 'ncbi'}
+            $isActive={project === 'ncbi'}
             onClick={() => setProject('ncbi')}
           >
             Basic Editors

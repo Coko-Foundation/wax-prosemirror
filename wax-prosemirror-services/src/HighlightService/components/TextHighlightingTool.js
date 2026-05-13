@@ -2,13 +2,13 @@ import React, { useMemo, useState, useRef, useContext } from 'react';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import {
   WaxContext,
   useOnClickOutside,
   MenuButton,
 } from 'wax-prosemirror-core';
+import { grid, override } from '../../helpers';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -25,12 +25,14 @@ const DropWrapper = styled.div`
 
   ${override('Wax.HighlightToolWrapper')}
 `;
+
 const TextHighlightComponent = styled.div`
   background: white;
   border: 1px solid gray;
   display: flex;
   flex-direction: column;
 `;
+
 const Highlighter = styled.div`
   border: 1px solid gray;
   cursor: pointer;
@@ -133,12 +135,12 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
         {isOpen && (
           <DropWrapper>
             <TextHighlightComponent
-              close={() => {
-                setIsOpen(false);
-              }}
+              // close={() => {
+              //   setIsOpen(false);
+              // }}
               item={item}
-              key={uuidv4()}
-              view={(dispatch, state)}
+              // key={uuidv4()}
+              // view={(dispatch, state)}
             >
               {renderList()}
             </TextHighlightComponent>

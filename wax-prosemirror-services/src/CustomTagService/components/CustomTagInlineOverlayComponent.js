@@ -1,4 +1,5 @@
-/* eslint react/prop-types: 0 */
+/* eslint-disable react/prop-types, no-unused-vars */
+
 import React, {
   useRef,
   useEffect,
@@ -7,9 +8,9 @@ import React, {
   Fragment,
 } from 'react';
 import styled from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext, ApplicationContext, Icon } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
+import { grid, th } from '../../helpers';
 
 const IconRemove = styled(Icon)`
   cursor: pointer;
@@ -117,32 +118,32 @@ const CustomTagInlineOverlayComponent = ({ mark }) => {
     }
   });
 
-  const onChangeTagName = () => {
-    setInputValue(ref.current.value);
-  };
+  // const onChangeTagName = () => {
+  //   setInputValue(ref.current.value);
+  // };
 
-  const handleKeyDown = event => {
-    if (event.key === 'Enter' || event.which === 13) {
-      onClickAdd();
-    }
-  };
+  // const handleKeyDown = event => {
+  //   if (event.key === 'Enter' || event.which === 13) {
+  //     onClickAdd();
+  //   }
+  // };
 
-  const onClickAdd = () => {
-    if (inputValue.trim() === '') return;
+  // const onClickAdd = () => {
+  //   if (inputValue.trim() === '') return;
 
-    configTags.push({
-      label: inputValue,
-      tagType: 'inline',
-    });
-    setAllTags(configTags);
-    saveTags({
-      label: inputValue,
-      tagType: 'inline',
-    });
-    setInputValue('');
-    if (ref.current) ref.current.focus();
-    setInputValue('');
-  };
+  //   configTags.push({
+  //     label: inputValue,
+  //     tagType: 'inline',
+  //   });
+  //   setAllTags(configTags);
+  //   saveTags({
+  //     label: inputValue,
+  //     tagType: 'inline',
+  //   });
+  //   setInputValue('');
+  //   if (ref.current) ref.current.focus();
+  //   setInputValue('');
+  // };
 
   const addToSelection = item => {
     const tags = mark ? mark.attrs.tags : [];

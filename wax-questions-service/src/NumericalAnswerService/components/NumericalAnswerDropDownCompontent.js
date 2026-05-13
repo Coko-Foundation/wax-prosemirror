@@ -16,7 +16,7 @@ import {
 } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
+  opacity: ${props => (props.$disabled ? '0.4' : '1')};
   z-index: 999;
 `;
 
@@ -24,7 +24,7 @@ const DropDownButton = styled.button`
   background: #fff;
   border: 1px solid #f4f4f4;
   color: #000;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   position: relative;
   top: 2px;
@@ -39,7 +39,7 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  visibility: ${props => (props.$isOpen ? 'visible' : 'hidden')};
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -200,12 +200,12 @@ const NumericalAnswerDropDownCompontent = ({ node }) => {
 
   const NumericalAnswerDropDown = useMemo(
     () => (
-      <Wrapper disabled={isDisabled} ref={wrapperRef}>
+      <Wrapper $disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
+          $disabled={isDisabled}
           aria-controls="numerical-answer-list"
           aria-expanded={isOpen}
           aria-haspopup
-          disabled={isDisabled}
           onKeyDown={e => {
             if (e.keyCode === 40) {
               itemRefs.current[0].current.focus();
@@ -223,9 +223,9 @@ const NumericalAnswerDropDownCompontent = ({ node }) => {
           <span>{label}</span> <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
+          $isOpen={isOpen}
           aria-label="Choose an item type"
           id="numerical-list"
-          isOpen={isOpen}
           role="menu"
         >
           {dropDownOptions.map((option, index) => {

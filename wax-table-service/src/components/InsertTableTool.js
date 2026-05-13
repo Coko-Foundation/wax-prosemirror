@@ -4,11 +4,11 @@
  * TO DO -- Implement a gdocs-style CSS only solution to dramatically cut back on renders
  */
 
-/* eslint-disable*/
+/* eslint-disable no-underscore-dangle, no-plusplus */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/prop-types */
 
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import { withTheme } from 'styled-components';
 
 const clamp = (min, val, max) => {
@@ -41,7 +41,7 @@ const fromXY = (x, y, padding = 0) => {
 };
 
 const fromHTMlElement = el => {
-  const display = document.defaultView.getComputedStyle(el).display;
+  const { display } = document.defaultView.getComputedStyle(el);
   if (display === 'contents' && el.children.length === 1) {
     // el has no layout at all, use its children instead.
     return fromHTMlElement(el.children[0]);
@@ -72,10 +72,10 @@ const MAX_SIZE = 20;
 const GridCell = props => {
   const { x, y, selected, theme } = props;
   const style = {
-    left: x + 'px',
-    top: y + 'px',
-    width: CELL_SIZE + 'px',
-    height: CELL_SIZE + 'px',
+    left: `${x}px`,
+    top: `${y}px`,
+    width: `${CELL_SIZE}px`,
+    height: `${CELL_SIZE}px`,
     border: `1px solid ${theme.colorBorder}`,
     boxSizing: 'border-box',
     position: 'absolute',
@@ -84,12 +84,6 @@ const GridCell = props => {
 
   if (selected) style.background = theme.colorPrimary;
   return <div style={style} />;
-};
-
-GridCell.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  selected: PropTypes.bool.isRequired,
 };
 
 const ThemedCell = withTheme(GridCell);
@@ -133,7 +127,7 @@ const TableGridSizeEditor = props => {
   };
 
   const _onMouseMove = e => {
-    const el = _ref && ReactDOM.findDOMNode(_ref);
+    const el = _ref;
     const elRect = el ? htmlElementToRect(el) : null;
     const mouseRect = fromXY(e.screenX, e.screenY, 10);
 
@@ -223,8 +217,8 @@ const TableGridSizeEditor = props => {
   };
 
   const bodyStyle = {
-    width: w + 'px',
-    height: h + 'px',
+    width: `${w}px`,
+    height: `${h}px`,
     position: 'relative',
   };
 
@@ -235,7 +229,7 @@ const TableGridSizeEditor = props => {
   };
 
   return (
-    <div style={wrapperStyle} ref={_onRef}>
+    <div ref={_onRef} style={wrapperStyle}>
       <div
         onMouseDown={_onMouseDown}
         onMouseEnter={_onMouseEnter}
@@ -248,10 +242,6 @@ const TableGridSizeEditor = props => {
       </div>
     </div>
   );
-};
-
-TableGridSizeEditor.propTypes = {
-  onGridSelect: PropTypes.func.isRequired,
 };
 
 export default TableGridSizeEditor;

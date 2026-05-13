@@ -20,7 +20,7 @@ import citationDataService from '../services/CitationDataService';
 
 const Wrapper = styled.div`
   display: flex;
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
+  opacity: ${props => (props.$disabled ? '0.4' : '1')};
 `;
 
 const ButtonWrapper = styled.div`
@@ -33,7 +33,7 @@ const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   width: 160px;
 
@@ -54,7 +54,7 @@ const DropDownMenu = styled.div`
   max-height: 180px;
   overflow-y: scroll;
   position: absolute;
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  visibility: ${props => (props.$isOpen ? 'visible' : 'hidden')};
   width: 170px;
   z-index: 2;
 
@@ -207,13 +207,13 @@ const CitationDropDown = () => {
 
   const CitationDropDownComponent = useMemo(
     () => (
-      <Wrapper disabled={isDisabled} ref={wrapperRef}>
+      <Wrapper $disabled={isDisabled} ref={wrapperRef}>
         <ButtonWrapper>
           <DropDownButton
+            $disabled={isDisabled}
             aria-controls="citation-options"
             aria-expanded={isOpen}
             aria-haspopup
-            disabled={isDisabled}
             onKeyDown={e => {
               if (e.keyCode === 40) {
                 itemRefs.current[0].current.focus();
@@ -233,9 +233,9 @@ const CitationDropDown = () => {
           </DropDownButton>
         </ButtonWrapper>
         <DropDownMenu
+          $isOpen={isOpen}
           aria-label="Choose a citation option"
           id="citation-options"
-          isOpen={isOpen}
           role="menu"
         >
           {dropDownOptions.map((option, index) => {

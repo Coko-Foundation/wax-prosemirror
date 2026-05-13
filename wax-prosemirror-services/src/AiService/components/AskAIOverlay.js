@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* stylelint-disable no-descending-specificity */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
@@ -370,7 +371,13 @@ const CustomPromptButton = styled(ButtonBase)`
 
 // #endregion STYLED COMPONENTS ---------------------------------------------
 
-const AskAIOverlay = ({ setPosition, position, config }) => {
+const AskAIOverlay = ({
+  setPosition = () => {},
+  position = {},
+  config = {
+    AskAiContentTransformation: () => {},
+  },
+}) => {
   // #region HOOKS & INIT ------------------------
   const { t, i18n } = useTranslation();
   const ctx = useContext(WaxContext);
@@ -711,14 +718,6 @@ AskAIOverlay.propTypes = {
   }),
   setPosition: PropTypes.func,
   config: PropTypes.shape({ AskAiContentTransformation: PropTypes.func }),
-};
-
-AskAIOverlay.defaultProps = {
-  position: {},
-  setPosition: () => {},
-  config: {
-    AskAiContentTransformation: () => {},
-  },
 };
 
 export default AskAIOverlay;

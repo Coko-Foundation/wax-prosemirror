@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* stylelint-disable no-descending-specificity */
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import {
@@ -9,7 +10,7 @@ import {
   WaxView,
   ApplicationContext,
 } from 'wax-prosemirror-core';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th } from '../../helpers';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 
@@ -152,7 +153,7 @@ const WaxSurfaceScroll = styled.div`
   box-sizing: border-box;
   display: flex;
   height: 100%;
-  overflow-y: ${props => (props.citationMode ? 'hidden' : 'auto')};
+  overflow-y: ${props => (props.$citationMode ? 'hidden' : 'auto')};
   position: absolute;
   width: 100%;
   /* stylelint-disable-next-line order/properties-alphabetical-order */
@@ -179,7 +180,7 @@ const CitationContainer = styled.div`
 const EditorContainer = styled.div`
   height: 100%;
   width: 65%;
-  overflow-y: ${props => (props.citationMode ? 'auto' : 'visible')};
+  overflow-y: ${props => (props.$citationMode ? 'auto' : 'visible')};
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
@@ -335,7 +336,7 @@ const EditoriaLayout = props => {
   useEffect(() => {
     const areNotes = notes && !!notes.length && notes.length > 0;
     setHasNotes(areNotes);
-  }, [notes?.length]);
+  }, [notes]);
 
   return (
     <ThemeProvider theme={cokoTheme}>
@@ -365,9 +366,9 @@ const EditoriaLayout = props => {
             >
               <WaxSurfaceScroll
                 id="wax-surface-scroll"
-                citationMode={showCitationManager}
+                $citationMode={showCitationManager}
               >
-                <EditorContainer citationMode={showCitationManager}>
+                <EditorContainer $citationMode={showCitationManager}>
                   <WaxView {...props} />
                 </EditorContainer>
                 {showCitationManager ? (

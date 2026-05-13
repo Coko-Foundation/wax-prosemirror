@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState, useMemo } from 'react';
 import styled from 'styled-components';
-import { th } from '@pubsweet/ui-toolkit';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
+import { th } from '../../helpers';
 import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 import NumericalAnswerDropDownCompontent from './NumericalAnswerDropDownCompontent';

@@ -5,9 +5,10 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { th } from '@pubsweet/ui-toolkit';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
+
+import { th } from '../../helpers';
 
 const Svg = styled.svg.attrs(() => ({
   version: '1.1',
@@ -88,11 +89,7 @@ export default {
     </Svg>
   ),
   strikethrough: ({ className }) => (
-    <Svg
-      className={className}
-      enable-background="new 0 0 24 24"
-      viewBox="0 0 24 24"
-    >
+    <Svg className={className} viewBox="0 0 24 24">
       <g>
         <rect fill="none" height="24" width="24" />
       </g>
@@ -121,11 +118,7 @@ export default {
     </Svg>
   ),
   subscript: ({ className }) => (
-    <Svg
-      className={className}
-      enable-background="new 0 0 24 24"
-      viewBox="0 0 24 24"
-    >
+    <Svg className={className} viewBox="0 0 24 24">
       <g>
         <rect fill="none" height="24" width="24" />
         <path d="M22,18h-2v1h3v1h-4v-2c0-0.55,0.45-1,1-1h2v-1h-3v-1h3c0.55,0,1,0.45,1,1v1C23,17.55,22.55,18,22,18z M5.88,18h2.66 l3.4-5.42h0.12l3.4,5.42h2.66l-4.65-7.27L17.81,4h-2.68l-3.07,4.99h-0.12L8.85,4H6.19l4.32,6.73L5.88,18z" />
@@ -133,11 +126,7 @@ export default {
     </Svg>
   ),
   superscript: ({ className }) => (
-    <Svg
-      className={className}
-      enable-background="new 0 0 24 24"
-      viewBox="0 0 24 24"
-    >
+    <Svg className={className} viewBox="0 0 24 24">
       <g>
         <rect fill="none" height="24" width="24" x="0" y="0" />
         <path d="M22,7h-2v1h3v1h-4V7c0-0.55,0.45-1,1-1h2V5h-3V4h3c0.55,0,1,0.45,1,1v1C23,6.55,22.55,7,22,7z M5.88,20h2.66l3.4-5.42h0.12 l3.4,5.42h2.66l-4.65-7.27L17.81,6h-2.68l-3.07,4.99h-0.12L8.85,6H6.19l4.32,6.73L5.88,20z" />
@@ -145,11 +134,7 @@ export default {
     </Svg>
   ),
   smallCaps: ({ className }) => (
-    <Svg
-      className={className}
-      enable-background="new 0 0 24 24"
-      viewBox="0 0 24 24"
-    >
+    <Svg className={className} viewBox="0 0 24 24">
       <g>
         <rect fill="none" height="24" width="24" />
       </g>
@@ -218,11 +203,7 @@ export default {
     </Svg>
   ),
   codeBlock: ({ className }) => (
-    <Svg
-      className={className}
-      enable-background="new 0 0 24 24"
-      viewBox="0 0 24 24"
-    >
+    <Svg className={className} viewBox="0 0 24 24">
       <g>
         <rect fill="none" height="24" width="24" />
         <circle cx="12" cy="3.5" fill="none" r=".75" />

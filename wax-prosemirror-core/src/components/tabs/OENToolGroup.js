@@ -77,11 +77,12 @@ const OENToolGroup = ({ item }) => {
                     disabled={isDisabled}
                     key={uuidv4()}
                     label={tool.displayName}
+                    /* eslint-disable-next-line consistent-return */
                     onMouseDown={() => {
                       const { from, to } = main.state.selection;
                       let isInOenContainer = false;
 
-                      main.state.doc.nodesBetween(from, to, (node, pos) => {
+                      main.state.doc.nodesBetween(from, to, node => {
                         if (
                           node.type.name === 'oen_container' ||
                           node.type.name === 'oen_aside'

@@ -7,7 +7,7 @@ import {
   DocumentHelpers,
   WaxView,
 } from 'wax-prosemirror-core';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th } from '../../helpers';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 

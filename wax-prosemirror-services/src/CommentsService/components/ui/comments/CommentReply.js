@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { useOnClickOutside } from 'wax-prosemirror-core';
 import Mentions from 'rc-mentions';
+import { grid, th, override } from '../../../../helpers';
 import './mentions.css';
 
 const Wrapper = styled.div`
@@ -53,8 +53,8 @@ const Button = styled.button`
   padding: ${grid(2)} ${grid(4)};
   
   /* stylelint-disable-next-line order/properties-alphabetical-order */
-  ${props => props.primary && primary}
-  ${props => props.disabled && `cursor: not-allowed; opacity: 0.3;`}
+  ${props => props.$primary && primary}
+  ${props => props.$disabled && `cursor: not-allowed; opacity: 0.3;`}
 
   ${override('Wax.CommentButtons')}
 `;
@@ -194,9 +194,9 @@ const CommentReply = props => {
       <ActionWrapper>
         <ButtonGroup>
           <Button
-            disabled={commentValue.length === 0 || isReadOnlyPost}
+            $disabled={commentValue.length === 0 || isReadOnlyPost}
+            $primary
             onClick={handleSubmit}
-            primary
             type="submit"
           >
             {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Post`)
@@ -204,7 +204,7 @@ const CommentReply = props => {
               : 'Post'}
           </Button>
 
-          <Button disabled={commentValue.length === 0} onClick={resetValue}>
+          <Button $disabled={commentValue.length === 0} onClick={resetValue}>
             {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Cancel`)
               ? t(`Wax.Comments.Cancel`)
               : 'Cancel'}
@@ -222,7 +222,5 @@ CommentReply.propTypes = {
   onTextAreaBlur: PropTypes.func.isRequired,
   showTitle: PropTypes.bool.isRequired,
 };
-
-CommentReply.defaultProps = {};
 
 export default CommentReply;

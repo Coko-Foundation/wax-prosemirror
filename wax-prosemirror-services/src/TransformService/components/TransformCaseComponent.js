@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuid } from 'uuid';
 import {
   WaxContext,
@@ -10,6 +9,7 @@ import {
   MenuButton,
   Icon,
 } from 'wax-prosemirror-core';
+import { grid, override } from '../../helpers';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -26,12 +26,14 @@ const DropWrapper = styled.div`
 
   ${override('Wax.TransformToolWrapper')}
 `;
+
 const TextTransformCaseComponent = styled.div`
   background: white;
   border: 1px solid gray;
   display: flex;
   flex-direction: column;
 `;
+
 const Transformer = styled.div`
   cursor: pointer;
   display: inline-grid;
@@ -145,12 +147,12 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
         {isOpen && (
           <DropWrapper>
             <TextTransformCaseComponent
-              close={() => {
-                setIsOpen(false);
-              }}
-              item={item}
+              // close={() => {
+              //   setIsOpen(false);
+              // }}
+              // item={item}
               key={uuid()}
-              view={state}
+              // view={state}
             >
               {renderList()}
             </TextTransformCaseComponent>

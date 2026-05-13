@@ -4,13 +4,13 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 import { each, eachRight, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
 import {
   WaxContext,
   ApplicationContext,
   useDebounce,
   Icon,
 } from 'wax-prosemirror-core';
+import { grid } from '../../helpers';
 import helpers from './helpers';
 
 const Wrapper = styled.div`
@@ -84,13 +84,13 @@ const IconWrapper = styled.span`
 `;
 
 const ExpandedWrapper = styled.div`
-  pointer-events: ${props => (props.isDisabled ? 'none' : '')};
+  pointer-events: ${props => (props.$isDisabled ? 'none' : '')};
 `;
 
 const StyledIconMore = styled(Icon)`
-  cursor: ${props => (props.isDisabled ? 'not-allowed' : 'pointer')};
+  cursor: ${props => (props.$isDisabled ? 'not-allowed' : 'pointer')};
   height: 24px;
-  opacity: ${props => (props.isDisabled ? '0.4' : '1')};
+  opacity: ${props => (props.$isDisabled ? '0.4' : '1')};
   width: 24px;
 `;
 
@@ -99,9 +99,9 @@ const Svg = styled.svg.attrs(() => ({
   xmlns: 'http://www.w3.org/2000/svg',
   xmlnsXlink: 'http://www.w3.org/1999/xlink',
 }))`
-  background: ${props => (props.active ? '#535E76' : 'white')};
+  background: ${props => (props.$active ? '#535E76' : 'white')};
   cursor: pointer;
-  fill: ${props => (props.active ? 'white' : '#535E76')};
+  fill: ${props => (props.$active ? 'white' : '#535E76')};
   height: 24px;
   padding: 2px;
   vertical-align: top;
@@ -170,6 +170,7 @@ const FindComponent = ({
     }
   }, [debouncedSearchTerm, matchCaseSearch, JSON.stringify(allStates)]);
 
+  /* eslint-disable-next-line consistent-return */
   const setCounterSearches = counter => {
     if (counter === 0) return setCounterText(`0 ${of} 0`);
     setCounterText(`0 ${of} ${counter}`);
@@ -272,7 +273,7 @@ const FindComponent = ({
         </SearchInputWrapper>
         <ControlsWrapper>
           <IconWrapper onClick={matchCase} role="button" tabIndex="0">
-            <Svg active={matchCaseSearch} fill="none" viewBox="0 0 24 24">
+            <Svg $active={matchCaseSearch} fill="none" viewBox="0 0 24 24">
               <title>
                 {' '}
                 <Translation label="Match Case" />{' '}
@@ -295,8 +296,8 @@ const FindComponent = ({
             <StyledIcon name="navigateNext" />
           </IconWrapper>
 
-          <ExpandedWrapper isDisabled={!isEditable} onClick={showExpanded}>
-            <StyledIconMore isDisabled={!isEditable} name="more" />
+          <ExpandedWrapper $isDisabled={!isEditable} onClick={showExpanded}>
+            <StyledIconMore $isDisabled={!isEditable} name="more" />
           </ExpandedWrapper>
 
           <CloseWrapper onClick={closeFind}>

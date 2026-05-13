@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { ComponentPlugin, WaxView } from 'wax-prosemirror-core';
 import { cokoTheme } from '../theme';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th } from '../../helpers';
 import EditorElements from './EditorElements';
 
 const Wrapper = styled.div`

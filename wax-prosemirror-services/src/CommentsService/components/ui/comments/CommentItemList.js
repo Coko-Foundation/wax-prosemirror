@@ -1,8 +1,10 @@
+/* eslint-disable react/require-default-props */
+
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clone, uniqueId } from 'lodash';
-import { override, th } from '@pubsweet/ui-toolkit';
+import { override, th } from '../../../../helpers';
 import CommentItem from './CommentItem';
 
 const Wrapper = styled.div`
@@ -33,7 +35,7 @@ const More = styled.span`
 `;
 
 const CommentItemList = props => {
-  const { active, className, data, title, users } = props;
+  const { active = false, className, data = [], title, users = [] } = props;
   if (!data || data.length === 0) return null;
 
   const [items, setItems] = useState(data);
@@ -99,13 +101,6 @@ CommentItemList.propTypes = {
       currentUser: PropTypes.bool,
     }),
   ),
-};
-
-CommentItemList.defaultProps = {
-  active: false,
-  data: [],
-  title: null,
-  users: [],
 };
 
 export default CommentItemList;

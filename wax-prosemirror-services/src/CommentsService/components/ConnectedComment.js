@@ -4,15 +4,15 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
 import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
-import { override } from '@pubsweet/ui-toolkit';
+import { override } from '../../helpers';
 import CommentBox from './ui/comments/CommentBox';
 import CommentDecorationPluginKey from '../plugins/CommentDecorationPluginKey';
 
 const ConnectedCommentStyled = styled.div`
-  margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
+  margin-left: ${props => (props.$active ? `${-20}px` : `${50}px`)};
   position: absolute;
   transition: ${props =>
-    props.active && props.length ? `none!important` : `all 1.3s`};
+    props.$active && props.$length ? `none!important` : `all 1.3s`};
   width: 205px;
   @media (max-width: 600px) {
     margin-left: 15px;
@@ -109,6 +109,7 @@ export default ({
     recalculateTops();
   };
 
+  // eslint-disable-next-line consistent-return
   const getUsersFromComment = commentText => {
     if (usersMentionList.length === 0) return false;
     const mentionedUsers = [];
@@ -167,9 +168,9 @@ export default ({
   const MemorizedComponent = useMemo(
     () => (
       <ConnectedCommentStyled
-        active={isActive}
+        $active={isActive}
+        $length={conversation.length === 0}
         data-box={commentId}
-        length={conversation.length === 0}
         style={styles}
       >
         <CommentBox
