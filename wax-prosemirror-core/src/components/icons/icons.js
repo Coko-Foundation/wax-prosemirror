@@ -390,7 +390,7 @@ export default {
     <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title>
         <Translation
-          defaultTrans="Show Changes"
+          defaultTrans="Show / hide Changes"
           label="Wax.TrackChanges.Show Changes"
         />{' '}
       </title>
@@ -403,7 +403,7 @@ export default {
       <title>
         {' '}
         <Translation
-          defaultTrans="Accept"
+          defaultTrans="Accept in Selection"
           label="Wax.TrackChanges.Accept"
         />{' '}
       </title>
@@ -416,7 +416,7 @@ export default {
       <title>
         {' '}
         <Translation
-          defaultTrans="Reject"
+          defaultTrans="Reject in Selection"
           label="Wax.TrackChanges.Reject"
         />{' '}
       </title>

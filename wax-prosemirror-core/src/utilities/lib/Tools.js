@@ -10,9 +10,11 @@ class Tools {
   title = 'title';
   _isDisplayed = true;
   _isHiddenInToolGroup = false;
+  _showLabel = true;
   config = {};
   pmplugins = {};
   name = 'name';
+
   constructor(@inject('Config') config, @inject('PmPlugins') pmplugins) {
     this.config = config;
     this.pmplugins = pmplugins;
@@ -42,7 +44,7 @@ class Tools {
     return {
       title: this.title,
       icon: this.icon,
-      label: this.label,
+      label: this._showLabel ? this.label : undefined,
       active: this.active,
       run: this.run,
       enable: this.enable,
@@ -82,5 +84,14 @@ class Tools {
   isIntoMoreSection() {
     return this._isHiddenInToolGroup;
   }
+
+  showLabel() {
+    this._showLabel = true;
+  }
+
+  hideLabel() {
+    this._showLabel = false;
+  }
 }
+
 export default Tools;

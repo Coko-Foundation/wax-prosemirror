@@ -9,6 +9,7 @@ export { default as TextBlockLevelService } from './src/TextBlockLevel/TextBlock
 export { default as DisplayBlockLevelService } from './src/DisplayBlockLevel/DisplayBlockLevelService';
 export { default as NoteService } from './src/NoteService/NoteService';
 export { default as CommentsService } from './src/CommentsService/CommentsService';
+export { default as CommentsInlineService } from './src/CommentsInlineService/CommentsInlineService';
 export { default as CodeBlockService } from './src/CodeBlockService/CodeBlockService';
 export { default as LinkService } from './src/LinkService/LinkService';
 export { default as TrackChangeService } from './src/TrackChangeService/TrackChangeService';
@@ -30,7 +31,7 @@ export { default as OENContainersService } from './src/OENContainersService/OENC
 export { default as YjsService } from './src/YjsService/YjsService';
 export { default as ExternalAPIContentService } from './src/ExternalAPIContentService/ExternalAPIContentService';
 export { default as AskAiContentService } from './src/AiService/AskAiContentService';
-
+export { default as ContentUpdateService } from './src/ContentUpdateService/ContentUpdateService';
 /*
 ToolGroups
 */
@@ -39,3 +40,6 @@ export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/Bl
 
 /* Plugins */
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';
+
+/* Various */
+export { default as insertImage } from './src/ImageService/components/Upload';

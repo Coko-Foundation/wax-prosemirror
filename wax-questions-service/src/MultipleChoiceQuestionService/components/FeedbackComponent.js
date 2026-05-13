@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState, useMemo, useEffect } from 'react';
+import React, { useContext, useRef, useState, useMemo, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
@@ -48,17 +48,20 @@ export default ({ node, getPos, readOnly }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },
+    setOption,
   } = context;
 
   const [isFirstRun, setFirstRun] = useState(true);
-  const [feedBack, setFeedBack] = useState(node.attrs.feedback);
+  const [feedBack, setFeedBack] = useState(node?.attrs?.feedback || '');
   const feedBackRef = useRef(null);
+  
+  const textareaId = `feedback-${node?.attrs?.id}`;
 
   const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
     const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === node.attrs.id) {
+      if (singleNode.node.attrs.id === node?.attrs?.id) {
         main.dispatch(
           main.state.tr.setNodeMarkup(getPos(), undefined, {
             ...singleNode.node.attrs,
@@ -92,6 +95,13 @@ export default ({ node, getPos, readOnly }) => {
     }, 50);
   };
 
+  const handleInteraction = useCallback(() => {
+    // Save the textarea ID to context when clicked or focused
+    if (setOption && textareaId) {
+      setOption({ activeTextareaId: textareaId });
+    }
+  }, [setOption, textareaId]);
+
   useEffect(() => {
     setTimeout(() => {
       setFirstRun(false);
@@ -103,19 +113,24 @@ export default ({ node, getPos, readOnly }) => {
       <FeedBack>
         <FeedBackLabel>Feedback</FeedBackLabel>
         <FeedBackInput
+          data-textarea-id={textareaId}
+          onClick={handleInteraction}
           onChange={feedBackInput}
-          onFocus={onFocus}
+          onFocus={e => {
+            handleInteraction();
+            onFocus();
+          }}
           placeholder="Insert feedback"
           readOnly={readOnly}
           ref={feedBackRef}
           rows="1"
           style={{ height: setHeight() }}
           type="text"
-          value={feedBack}
+          value={node?.attrs?.feedback || feedBack}
         />
       </FeedBack>
     ),
-    [feedBack, isFirstRun],
+    [feedBack, isFirstRun, node?.attrs?.feedback, textareaId, handleInteraction],
   );
 };
 

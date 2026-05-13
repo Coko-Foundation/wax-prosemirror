@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* stylelint-disable no-descending-specificity */
 import React, { useContext, useState, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
@@ -7,6 +8,7 @@ import {
   ComponentPlugin,
   DocumentHelpers,
   WaxView,
+  ApplicationContext,
 } from 'wax-prosemirror-core';
 import { grid, th } from '../../helpers';
 import { cokoTheme } from '../theme';
@@ -62,6 +64,7 @@ const TopMenu = styled.div`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   display: flex;
+  align-items: center;
   min-height: 40px;
   user-select: none;
 
@@ -87,6 +90,25 @@ const TopMenu = styled.div`
   > div[data-name='FindAndReplaceTool'] {
     border-right: none;
   }
+
+  > div[data-name='TrackOptions'] {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    button {
+      top: 6px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    svg {
+      display: block;
+      margin: 0;
+    }
+  }
 `;
 
 const SideMenu = styled.div`
@@ -98,22 +120,67 @@ const SideMenu = styled.div`
 
 const EditorArea = styled.div`
   flex-grow: 1;
+  position: relative;
+`;
+
+const ToggleButton = styled.button`
+  position: absolute;
+  top: 25px;
+  right: 16px;
+  background: ${th('colorBackgroundToolBar')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: ${th('colorText')};
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: ${th('colorBackground')};
+    border-color: ${th('colorPrimary')};
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px ${th('colorPrimary')}20;
+  }
 `;
 
 const WaxSurfaceScroll = styled.div`
   box-sizing: border-box;
   display: flex;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: ${props => (props.$citationMode ? 'hidden' : 'auto')};
   position: absolute;
   width: 100%;
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${EditorElements}
 `;
 
+const EditorScrollContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  overflow-y: auto;
+  width: 65%;
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
+  ${EditorElements}
+`;
+
+const CitationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 35%;
+`;
+
 const EditorContainer = styled.div`
   height: 100%;
   width: 65%;
+  overflow-y: ${props => (props.$citationMode ? 'auto' : 'visible')};
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
@@ -215,6 +282,7 @@ const getNotes = main => {
 const LeftSideBar = ComponentPlugin('leftSideBar');
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
+const CitationRightArea = ComponentPlugin('citationRightArea');
 const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
@@ -224,6 +292,22 @@ const EditoriaLayout = props => {
     pmViews: { main },
     options,
   } = useContext(WaxContext);
+
+  /* UPDATE CONTENT EXTERNALLY */
+
+  // const { app } = useContext(ApplicationContext);
+
+  // if (app && typeof app.updateContent === 'function') {
+  //   app.updateContent(
+  //     '<h1>New Content</h1><p>This replaces the editor content</p>',
+  //     main,
+  //   );
+  // }
+
+  // const plugin = app?.PmPlugins?.get('contentUpdatePlugin');
+  // if (plugin && main) {
+  //   plugin.props.updateContent('<h1>New Content</h1>', main);
+  // }
 
   let fullScreenStyles = {};
 
@@ -247,11 +331,13 @@ const EditoriaLayout = props => {
     main && DocumentHelpers.getTrackBlockNodesCount(main);
 
   const [hasNotes, setHasNotes] = useState(false);
+  const [showCitationManager, setShowCitationManager] = useState(false);
 
   useEffect(() => {
     const areNotes = notes && !!notes.length && notes.length > 0;
     setHasNotes(areNotes);
   }, [notes]);
+
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">
@@ -264,7 +350,12 @@ const EditoriaLayout = props => {
             <LeftSideBar />
           </SideMenu>
 
-          <EditorArea>
+          <EditorArea id={props.editorId}>
+            <ToggleButton
+              onClick={() => setShowCitationManager(!showCitationManager)}
+            >
+              {showCitationManager ? 'Comments' : 'Citations'}
+            </ToggleButton>
             <PanelGroup
               direction="column"
               panelWidths={[
@@ -273,22 +364,31 @@ const EditoriaLayout = props => {
               ]}
               onResizeEnd={onResizeEnd}
             >
-              <WaxSurfaceScroll id="wax-surface-scroll" l>
-                <EditorContainer>
+              <WaxSurfaceScroll
+                id="wax-surface-scroll"
+                $citationMode={showCitationManager}
+              >
+                <EditorContainer $citationMode={showCitationManager}>
                   <WaxView {...props} />
                 </EditorContainer>
-                <CommentsContainer>
-                  <CommentTrackToolsContainer>
-                    <CommentTrackTools>
-                      {commentsTracksCount + trackBlockNodesCount} COMMENTS AND
-                      SUGGESTIONS
-                      <CommentTrackOptions>
-                        <CommentTrackToolBar />
-                      </CommentTrackOptions>
-                    </CommentTrackTools>
-                  </CommentTrackToolsContainer>
-                  <RightArea area="main" />
-                </CommentsContainer>
+                {showCitationManager ? (
+                  <CitationContainer>
+                    <CitationRightArea />
+                  </CitationContainer>
+                ) : (
+                  <CommentsContainer>
+                    <CommentTrackToolsContainer>
+                      <CommentTrackTools>
+                        {commentsTracksCount + trackBlockNodesCount} COMMENTS
+                        AND SUGGESTIONS
+                        <CommentTrackOptions>
+                          <CommentTrackToolBar />
+                        </CommentTrackOptions>
+                      </CommentTrackTools>
+                    </CommentTrackToolsContainer>
+                    <RightArea area="main" />
+                  </CommentsContainer>
+                )}
               </WaxSurfaceScroll>
               {hasNotes && (
                 <NotesAreaContainer>

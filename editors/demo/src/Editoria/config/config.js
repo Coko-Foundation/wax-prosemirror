@@ -11,7 +11,7 @@ import {
   TextBlockLevelService,
   NoteService,
   TrackChangeService,
-  CommentsService,
+  CommentsInlineService,
   CodeBlockService,
   DisplayTextToolGroupService,
   MathService,
@@ -28,9 +28,14 @@ import {
   AskAiContentService,
   BlockQuoteService,
   YjsService,
+  ContentUpdateService,
 } from 'wax-prosemirror-services';
 
+import { QuestionsService } from 'wax-questions-service';
+
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
+
+import { CitationService } from 'wax-citation-service';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
 
@@ -117,11 +122,14 @@ export default {
         'Notes',
         'Lists',
         'Images',
+        // 'QuestionsDropDown',
         'SpecialCharacters',
         'CodeBlock',
         'ToggleAi',
         'Tables',
+        'Citation',
         'TrackingAndEditing',
+        'TrackOptions',
         'FindAndReplaceTool',
         'FullScreen',
       ],
@@ -138,9 +146,17 @@ export default {
       templateArea: 'BottomRightInfo',
       toolGroups: ['InfoToolGroup'],
     },
+    // {
+    //   templateArea: 'fillTheGap',
+    //   toolGroups: ['FillTheGap'],
+    // },
+    // {
+    //   templateArea: 'MultipleDropDown',
+    //   toolGroups: ['MultipleDropDown'],
+    // },
   ],
 
-  // CommentsService: { readOnly: true },
+  // CommentsInlineService: { readOnly: true },
   // OrderedListService: { subList: false },
   // BulletListService: { subList: false },
   // JoinUpService: { subList: false },
@@ -213,7 +229,7 @@ export default {
   //   // eslint-disable-next-line no-restricted-globals
   //   connectionUrl: 'ws://localhost:5010',
   //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-  //   docIdentifier: 'prosemirror-r5dw4dd5eeee344w22rq254werc',
+  //   docIdentifier: 'prosemirror-r5dwdfddgffefdsseegdfd54eeeffedd2rq254werc',
   //   YjsType: 'prosemirror',
   // },
 
@@ -227,7 +243,17 @@ export default {
     CustomPrompts: ['custom promt here!!'],
   },
 
+  ContentUpdateService: {
+    onContentUpdate: (htmlContent, newState) => {
+      console.log('Content updated:', htmlContent, newState);
+    },
+    onError: error => {
+      console.error('Error updating content:', error);
+    },
+  },
+
   services: [
+    new CitationService(),
     // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
@@ -238,7 +264,7 @@ export default {
     new LinkService(),
     new InlineAnnotationsService(),
     new TrackChangeService(),
-    new CommentsService(),
+    new CommentsInlineService(),
     new ImageService(),
     new TablesService(),
     new BaseService(),
@@ -253,5 +279,14 @@ export default {
     new HighlightService(),
     new BottomInfoService(),
     new TransformService(),
+    new ContentUpdateService(),
   ],
 };
+
+// Example: How to use ContentUpdateService from outside
+// Once the app is initialized, you can call:
+// app.updateContent('<p>Your HTML content here</p>');
+//
+// Or from a component with access to the app:
+// const { app } = useContext(ApplicationContext);
+// app.updateContent('<h1>New Content</h1><p>This will replace the editor content</p>');
