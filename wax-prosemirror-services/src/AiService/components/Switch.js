@@ -23,7 +23,7 @@ const Wrapper = styled.span`
       left: 6px;
     }
 
-    :after {
+    &::after {
       left: 42px;
     }
   }

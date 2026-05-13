@@ -25,7 +25,7 @@ const StyledSwitch = styled(Switch)`
       left: 6px;
     }
 
-    :after {
+    &::after {
       left: 42px;
     }
   }

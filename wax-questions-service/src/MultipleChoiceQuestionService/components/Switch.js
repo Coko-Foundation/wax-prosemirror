@@ -21,7 +21,8 @@ const Wrapper = styled.span`
     .rc-switch-inner {
       left: 6px;
     }
-    :after {
+
+    &:after {
       left: 33px;
     }
   }
