@@ -1,7 +1,7 @@
 {
   "name": "wax-citation-service",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Wax Table Service",
   "license": "MIT",
   "main": "dist/index.js",
