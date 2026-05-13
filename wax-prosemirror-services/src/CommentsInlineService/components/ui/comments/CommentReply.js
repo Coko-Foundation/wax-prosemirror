@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { useOnClickOutside } from 'wax-prosemirror-core';
+import { grid, th, override } from '../../../../helpers';
 
 const Wrapper = styled.div`
   background: ${th('colorBackgroundHue')};

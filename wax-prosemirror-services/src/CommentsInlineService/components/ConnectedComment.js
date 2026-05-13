@@ -10,7 +10,7 @@ import {
   DocumentHelpers,
   ApplicationContext,
 } from 'wax-prosemirror-core';
-import { override } from '@pubsweet/ui-toolkit';
+import { override } from '../../helpers';
 import CommentBox from './ui/comments/CommentBox';
 import Commands from './ui/comments/Commands';
 

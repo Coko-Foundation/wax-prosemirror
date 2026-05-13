@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { DateParser } from 'wax-prosemirror-core';
+import { grid, th, override } from '../../../../helpers';
 
 const Wrapper = styled.div``;
 

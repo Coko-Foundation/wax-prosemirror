@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { th } from '@pubsweet/ui-toolkit';
+import { th } from '../../../../helpers';
 /**
  * SVG source
  * https://material.io/resources/icons/?search=chat&icon=chat&style=baseline
@@ -27,8 +27,8 @@ const IconSVG = props => {
   return (
     <svg
       className={className}
-      xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M0 0h24v24H0z" fill="none" />
 
