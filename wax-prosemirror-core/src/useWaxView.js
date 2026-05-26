@@ -2,6 +2,8 @@
 import { useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
+import CryptoJS from 'crypto-js';
+import stringify from 'safe-stable-stringify';
 import trackedTransaction from './utilities/track-changes/trackedTransaction';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
@@ -36,6 +38,7 @@ const useWaxView = props => {
 
   app.setContext({ ...context, createPortal });
   const schema = app.getSchema();
+  const customValuesHash = CryptoJS.SHA256(stringify(customValues)).toString();
 
   useEffect(() => {
     app.bootServices();
@@ -101,7 +104,7 @@ const useWaxView = props => {
       view.focus();
     }
     setTimeout(() => {}, 500);
-  }, [readonly, customValues, app.id]);
+  }, [readonly, customValuesHash, app.id]);
 
   useEffect(() => {
     return () => (view = null);
