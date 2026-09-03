@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useRef, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
+import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import {
@@ -63,15 +64,39 @@ const ImageUpload = ({ item, fileUpload, view }) => {
     }
 
     if (imageServiceConfig && imageServiceConfig.handleAssetManager) {
-      await insertThroughFileMAnager();
+      await insertThroughFileManager();
     } else {
       inputRef.current.click();
     }
   };
 
-  async function insertThroughFileMAnager() {
+  async function insertThroughFileManager() {
     const handler = imageServiceConfig.handleAssetManager;
-    await handler();
+    const resolvedFiles = await handler();
+
+    if (isEmpty(resolvedFiles)) return;
+
+    const fileList = Array.isArray(resolvedFiles)
+      ? resolvedFiles
+      : [resolvedFiles];
+
+    fileList.forEach(fileData => {
+      const src = fileData.source || fileData.url;
+      if (!src) return;
+
+      const { state } = view;
+
+      view.dispatch(
+        state.tr.replaceSelectionWith(
+          state.schema.nodes.image.create({
+            src,
+            id: uuidv4(),
+            alt: fileData.alt || fileData.name || '',
+            fileid: fileData.id,
+          }),
+        ),
+      );
+    });
   }
 
   const isDisabled =
