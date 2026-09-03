@@ -13,6 +13,11 @@ const imageDetectionPlugin = props => {
       }
 
       const { handleAddedRemovedImages } = props;
+
+      if (typeof handleAddedRemovedImages !== 'function') {
+        return null;
+      }
+
       const addedImages = [];
       const removedImages = [];
 
